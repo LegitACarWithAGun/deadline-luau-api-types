@@ -32,71 +32,80 @@ export type Spring = {
 declare Spring: Spring_methods
 
 export type event_connection = {} -- todo
-export type event_methods<i...> = {
+export type event_methods<args...> = {
 	-- todo on all of these
 	DisconnectAll: unknown, -- cant get this to not error?
 	is: (unknown) -> boolean,
 	wrap: unknown, -- no idea what this would even be for
-	Connect: (callback: (i...) -> nil) -> event_connection,
+	Connect: (self: event<args...>, callback: (args...) -> nil) -> event_connection,
 	Destroy: unknown,
 	Fire: unknown,
 	Wait: unknown,
-	Once: (callback: (i...) -> nil) -> unknown, -- presumably?
+	Once: (self: event<args...>, callback: (args...) -> nil) -> unknown, -- presumably?
+	new: () -> event<args...>,
 }
+export type event<args...> = {
+
+} & event_methods<args...>
 
 declare time: {
 	renderstep: (label: string, callback: (delta_time: number) -> nil) -> event_connection,
 	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> event_connection,
-	update_heartbeat: (delta_time: number) -> unknown,
-	wait: (length: number) -> unknown,
-	delay: (seconds: number, () -> nil) -> unknown,
+	update_heartbeat: (delta_time: number) -> nil,
+	wait: (length: number) -> boolean, --- always returns true, idk why
+	delay: (seconds: number, () -> nil) -> nil,
 	get_time: () -> number,
 	get_synced_time: () -> number,
-	play_sound: (object: Sound) -> unknown, -- fairly confident this is it
+	play_sound: (object: Sound) -> unknown, -- errors currently, because it cant access .Play
 	get_speed: () -> number,
-	set_local_timescale: (timescale: number) -> unknown,
-	local_timescale_changed: unknown,
+	set_local_timescale: (timescale: number) -> nil, --- seems to only change the ui speed, no gameplay changes
+	local_timescale_changed: event<nil>, --- I checked any it really doesnt get any args
 }
 
 -- print returns as luauInstance(INSTANCE_NAME), just stealing that
--- todo check these
 export type luauInstance = {
-	play: (unknown) -> unknown,
-	stop: (unknown) -> unknown,
-	add_tag: (string) -> unknown,
-	get_tags: (unknown) -> {string},
-	remove_tag: (string) -> unknown,
-	set_attribute: (name: string, value: any) -> unknown,
+	play: () -> nil,
+	stop: () -> nil,
+	add_tag: (string) -> nil,
+	get_tags: () -> {string},
+	remove_tag: (string) -> nil,
+	set_attribute: (name: string, value: any) -> nil,
 	get_attribute: (name: string) -> any,
-	destroy: (unknown) -> unknown,
-	get_pivot: (unknown) -> CFrame,
-	pivot_to: (CFrame) -> unknown,
+	destroy: () -> nil,
+	get_pivot: () -> CFrame,
+	pivot_to: (CFrame) -> nil,
 	is_in_workspace: boolean,
 	find_first_child: (name: string) -> luauInstance,
 	is_a: (object_class: string) -> boolean,
 	is_descendant_of: (object: luauInstance) -> boolean,
-	get_descendants: (unknown) -> {luauInstance},
-	get_children: (unknown) -> {luauInstance},
-	get_primary_part: (unknown) -> luauInstance?,
-	clone: luauInstance,
-	__secure_get_owner: unknown,
-
-	-- known properties, todo
-	-- implied that this has access to every instance method and property so idk how Im gonna do that
+	get_descendants: () -> {luauInstance},
+	get_children: () -> {luauInstance},
+	clone: () -> luauInstance,
+	__secure_get_owner: (unknown) -> unknown, -- errors as `post-opcode sandbox escape detected`, glhf <3
 	Parent: luauInstance,
 	Name: string,
-	Volume: number,
+
+
+	-- TODO
+	-- properties that depend on the type of instance
+	-- you also do not have access to every property and method.
+	Volume: number?, -- only on sound objects
+	apply_impulse_at_position: nil | (impulse: Vector3, position: Vector3) -> nil,
+	apply_angular_impulse_at_position: nil | (impulse: Vector3, position: Vector3) -> nil,
+	apply_impulse: nil | (impulse: Vector3) -> nil,
+	set_network_owner: nil | (player: string) -> nil,
+	-- get_primary_part: () -> luauInstance?, -- whered I get this one from?
 }
 
 declare create_instance: (instance_name: string) -> luauInstance
 
 declare sound: {
-	play_sick_riff: (unknown) -> unknown,
-	create: (unknown) -> luauInstance
+	play_sick_riff: () -> nil,
+	create: () -> luauInstance
 }
-declare get_map_root: (unknown) -> luauInstance
-declare get_chars_root: (unknown) -> luauInstance
-declare clear_console: (unknown) -> unknown
+declare get_map_root: () -> luauInstance
+declare get_chars_root: () -> luauInstance
+declare clear_console: () -> nil
 
 declare tags: {
 	get_tags: () -> {string},
@@ -104,10 +113,29 @@ declare tags: {
 	get_all_tagged: (string) -> {Instance},
 }
 
+export type raycast_params = {
+	filter_descendants_instances: ({luauInstance}) -> nil,
+	collision_group: (name: string) -> nil,
+	filter_type: (filter: Enum.RaycastFilterType) -> nil,
+	add_to_filter: (list: luauInstance | {luauInstance}) -> nil, 
+	ignore_water: (boolean) -> nil, --- cant confirm the input currently
+	respect_can_collide: (boolean) -> nil, --- cant confirm the input currently
+	brute_force: (boolean) -> nil, --- cant confirm the input currently
+	__NOMINAL: string, -- always "luauRaycastParams". If I had to guess, its prolly a class identifier
+	__secure_get_owner: () -> RaycastParams,
+}
+export type raycast_result = {
+	normal: Vector3,
+	position: Vector3,
+	instance: luauInstance,
+	distance: number,
+	material: Enum.Material,
+}
 declare query: {
-	spherecast: unknown,
-	blockcast: unknown,
-	shapecast: unknown,
-	raycast: unknown,
-	create_raycast_params: unknown,
+	create_raycast_params: () -> raycast_params,
+	-- not super confident in all of these, since I cant properly test these
+	raycast: (origin: Vector3, direction: Vector3, params: raycast_params) -> raycast_result?,
+	shapecast: (part: luauInstance, direction: Vector3, params: raycast_params) -> raycast_result?,
+	spherecast: (position: Vector3, radius: number, direction: Vector3, params: raycast_params) -> raycast_result?,
+	blockcast: (cframe: CFrame, size: Vector3, direction: Vector3, params: raycast_params) -> raycast_result,
 }
