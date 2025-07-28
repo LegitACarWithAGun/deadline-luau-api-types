@@ -109,8 +109,8 @@ declare clear_console: () -> nil
 
 declare tags: {
 	get_tags: () -> {string},
-	get_tagged: (string) -> {Instance},
-	get_all_tagged: (string) -> {Instance},
+	get_tagged: (string) -> {luauInstance},
+	get_all_tagged: (string) -> {luauInstance},
 }
 
 export type raycast_params = {
