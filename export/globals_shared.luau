@@ -1,6 +1,9 @@
 -- remember to reload the window after changing this
 -- todo: figure out under what global the event class is stored as
 
+-- refer to export/sharedvars.luau for the full list of sharedvars
+declare sharedvars_descriptions: {[string]: string}
+
 -- Timer class + global
 type Timer_methods = {
 	reset: (self: Timer) -> nil,
@@ -35,7 +38,7 @@ export type event_connection = {} -- todo
 export type event_methods<args...> = {
 	-- todo on all of these
 	DisconnectAll: unknown, -- cant get this to not error?
-	is: (unknown) -> boolean,
+	is: unknown,
 	wrap: unknown, -- no idea what this would even be for
 	Connect: (self: event<args...>, callback: (args...) -> nil) -> event_connection,
 	Destroy: unknown,
