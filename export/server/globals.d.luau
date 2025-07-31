@@ -1,9 +1,11 @@
 --- PLEASE dont use this
 declare set_require_domain: (url_prefix: string) -> nil
 
--- todo
-export type map_preset = {
-	
+export type map_config = {
+	map: string,
+	time: number,
+	gamemode: string,
+	is_day: boolean,
 }
 
 declare map: {
@@ -11,8 +13,8 @@ declare map: {
 	get_maps: () -> {string},
 	set_time: (hour: number) -> number, --- returns the input?
 	kill_map_lights: () -> nil,
-	set_preset: (preset_name: string) -> nil,
-	set_map_from_config: (map_preset) -> nil, --- yields
+	set_preset: (lighting_preset: string) -> nil,
+	set_map_from_config: (config: map_config) -> nil, --- yields
 	set_map: (map_name: string) -> nil, --- yields
 }
 
@@ -36,9 +38,128 @@ declare chat: {
 	player_chatted: event<string, string, string>, --- player_name, channel, message
 }
 
--- todo
-export type player = {
+export type weapon_slot = "primary" | "secondary" | "throwable1" | "throwable2"
 
+export type ammo_data = {
+	loose_magazines: {number},
+	is_round_chambered_spent: boolean,
+	is_round_chambered: boolean,
+	type: string, -- todo; detachable_magazine
+	rounds_in_magazine: number,
+	metadata: {
+		magazine_capacity: number,
+		magazine_type: string, -- todo; standard
+	},
+}
+type setup = string
+export type weapon_data = {
+	ammo: ammo_data,
+	type: "weapon",
+	client_data: {
+		setup: setup, -- todo same json
+		name: string,
+		type: "weapon",
+		flashlight_enabled: boolean,
+		ammo: ammo_data,
+		laser_enabled: boolean,
+		id: string,
+	},
+}
+
+export type throwable_data = {
+	name: string,
+	type: "throwable", -- throwable
+}
+
+export type team_id = "attacker" | "defender"
+
+export type player = {
+	fire_client: (...any) -> nil,
+	kill: () -> nil,
+	explode: () -> nil,
+	bot: {
+		set_behavior: unknown,
+		set_move_destination: unknown,
+	},
+	get_health: () -> number?,
+	set_health: (health: number) -> nil,
+	get_active_slot: () -> weapon_slot?,
+	set_speed: (mult: number) -> nil,
+	get_animation_speed: () -> number,
+	set_animation_speed: (mult: number) -> nil, -- doesnt apply until you spawn again
+	get_position: () -> Vector3?,
+	get_weapon_from_loadout: (loadout: number, slot: weapon_slot) -> {
+		data: setup, -- todo: format for this
+		weapon: string,	
+	} | string, --- if error, returns a string
+	kick: () -> unknown,
+	refill_ammo: () -> nil,
+	player_id: number,
+	get_weapon_data_from_character: weapon_data,
+	spawn: () -> unknown, -- seems to return a table with with index 1 being a bool, 2 a string, cant define that tho
+	respawn: () -> unknown, -- same return as player.spawn()
+	set_weapon: (slot: weapon_slot, weapon: string | "nothing", setup: setup | "[]" | nil) -> nil,
+	get_team: () -> team_id,
+	set_team: (team: team_id) -> nil,
+	equip_weapon: (slot: weapon_slot, put_away_instantly: boolean?) -> nil,
+	ban_from_server: () -> unknown,
+	set_position: (pos: Vector3) -> nil,
+	set_model: (name: "orchids_shark_set" | "orchids_pbr_set" | "main" | "main_backup" | "mistake_mistake_set") -> nil,
+	id: number,
+	set_jump_multiplier: (mult: number) -> nil,
+	set_initial_health: (health: number) -> nil,
+	set_custom_camera_mode: (name: string) -> unknown,
+	set_camera_mode: (mode: "Default" | "Freecam" | "TPerson") -> nil,
+	name: string,
+	is_bot: () -> boolean,
+	is_alive: () -> boolean,
+	give_money: unknown,
+	get_profile_stats: () -> {
+		achievements: {
+			is_predemo_tester: boolean,
+			is_alpha_tester: boolean,
+		},
+		player: {
+			distance_travelled: number,
+			level_rewards_given: unknown,
+			total_explosive_kills: number,
+			total_kills: number,
+			total_penetration_kills: number,
+			total_deaths: number,
+			total_headshots: number,
+			experience: number,
+			weapon_use_time: {[string]: number},
+			total_points_captured: number,
+			total_matches_played: number,
+			owned_weapons: {string},
+			rounds_fired: number,
+		},
+		spendings: {
+			attachments: number,
+			weapons: number,			
+		},
+		weapon: {[string]: {
+			attachment_stats: {[string]: {
+				experience: number,
+				kills: number,
+			}},
+			kills: number,
+			deaths_with: number,
+			experience: number,
+			owned_attachments: {string},
+			deaths_from: number,
+			rounds_fired: number,
+			owned_camo: unknown,
+		}},			
+	},
+	get_leaderboard_stats: () -> {
+		deaths: number,
+		experience: number,
+		weapon_use_time: {[string]: number},
+		points: number,
+		actions: unknown,
+		kills: number,	
+	},
 }
 
 declare players: {
@@ -55,36 +176,88 @@ declare spawning: {
 	explosion: (position: Vector3) -> nil,
 }
 
--- todo
-export type sound_preset = {
 
+-- todo not 100% on this, surely this is documented somewhere tho
+export type sound_preset = {{
+	id: string,
+	occlude_inside: boolean,
+}}
+
+type lighting_values<T> = {
+	night: T,
+	dat: T,
+	datatype: string, -- "number", "color"
 }
-
--- todo
 export type lighting_preset = {
-
+	instance_properties: {
+		preset_atmosphere: {
+			Density: lighting_values<number>,
+			Offset: lighting_values<number>,
+			Color: lighting_values<Color3>,
+			Decay: lighting_values<Color3>,
+			Haze: lighting_values<number>,
+			Glare: lighting_values<number>,
+		},
+		preset_correction: {
+			Contrast: lighting_values<number>,
+		},
+	},
+	sky: {
+		StarCount: number,
+		SkyboxUp: string,
+		MoonTextureId: string,
+		SkyboxBk: string,
+		CelestialBodiesShown: boolean,
+		SkyboxDn: string,
+		SkyboxLf: string,
+		SunTextureId: string,
+		SunAngularSize: number,
+		SkyboxFt: string,
+		SkyboxRt: string,
+		MoonAngularSize: number,
+	},
+	volumika_properties: {
+		LightInfluence: lighting_values<number>,
+		ZOffset: lighting_values<number>,
+		Tint: lighting_values<Color3>,
+	},
+	lighting_properties: {
+		ColorShift_Bottom: lighting_values<Color3>,
+		Ambient: lighting_values<Color3>,
+		OutdoorAmbient: lighting_values<Color3>,
+		EnvironmentDiffuseScale: lighting_values<number>,
+		Brightness: lighting_values<number>,
+		ColorShift_Top: lighting_values<Color3>,
+		EnvironmentSpecularScale: lighting_values<number>,
+	},
+	day_time: number,
+	material_properties: {
+		terrain_colors: {[Enum.Material]: Color3},
+		material_overrides: {[Enum.Material]: string},
+	},
+	night_time: number,
 }
 
 declare config: {
 	sound_presets: {[string]: sound_preset},
 	weapon_names: {string},
 	maps: {
-		STUDIO_CONFIGURATION: unknown,
-		SHOOTING_RANGE_CONFIGURATION: unknown,
-		MAP_CONFIGURATION: unknown,	
+		STUDIO_CONFIGURATION: {[string]: map_config},
+		SHOOTING_RANGE_CONFIGURATION: map_config,
+		MAP_CONFIGURATION: {[string]: map_config},	
 	},
 	lighting_presets: {[string]: lighting_preset},
 }
 
 -- todo
-type memory_signal_methods<T>: {
+type memory_signal_methods<T> = {
 
 }
 
-type memory_signal<T>: {
+type memory_signal<T> = {
 	value: T,
 	changed: event<T>,
-} & memory_signal_methods
+} & memory_signal_methods<T>
 
 declare game_data: {
 	map_properties: memory_signal<{
@@ -109,13 +282,8 @@ declare game_data: {
 	}>,
 	gamemode: memory_signal<string>, --- weird behavior that I need to make a bug report about
 	map_loaded: memory_signal<boolean>,
-	lighting: memory_signal<string>, --- preset name
-	map_config: memory_signal<{
-		map: string,
-		time: number,
-		gamemode: string,
-		is_day: boolean,
-	}>,
+	lighting: memory_signal<string>, --- lighting preset name
+	map_config: memory_signal<map_config>,
 	map_code: memory_signal<string>, --- the name you use to load the map
 	gamemode_title: memory_signal<string>, --- user-facing gamemode name
 }
@@ -124,10 +292,10 @@ declare load_modfile: (string) -> unknown
 declare on_modfile_loaded: event<unknown>
 
 -- todo client networking stuff, not confident its this anyway
-declare on_client_event: event<string, any...>
+declare on_client_event: event<(string, ...any)>
 
 export type interactable = {
 	new: (instance: luauInstance) -> interactable,
 	interact: (self: interactable, player: player) -> nil,
 }
-declare register_interactable: (attribute: string, class: interactable)
+declare register_interactable: (attribute: string, class: interactable) -> unknown
