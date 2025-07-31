@@ -1,11 +1,10 @@
 {
     "luau-lsp.types.definitionFiles": [
-        "./export/globals_shared.luau",
-        "./export/globals_server.luau",
-        "./export/sharedvars.luau",
+		"./export/shared/globals.d.luau",
+		"./export/shared/sharedvars.d.luau",
+		"./export/server/globals.d.luau",
     ],
     "luau-lsp.sourcemap.enabled": false,
-
 
     "editor.insertSpaces": false,
     "editor.detectIndentation": false
