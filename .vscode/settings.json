@@ -5,7 +5,4 @@
 		"./export/server/globals.d.luau",
     ],
     "luau-lsp.sourcemap.enabled": false,
-
-    "editor.insertSpaces": false,
-    "editor.detectIndentation": false
 }
