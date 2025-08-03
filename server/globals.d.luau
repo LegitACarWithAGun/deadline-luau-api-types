@@ -1,5 +1,6 @@
 --- PLEASE dont use this
 declare set_require_domain: (url_prefix: string) -> nil
+declare require: (url: string) -> nil
 
 export type map_config = {
 	map: string,
@@ -26,16 +27,16 @@ declare gamemode: {
 	available_gamemodes: {[string]: () -> gamemode_class},
 	set_gamemode: unknown, -- hard to use
 	force_set_gamemode: (mode_name: string) -> nil, --- yields
-	started: event<nil>,
+	started: Signal<nil>,
 	finish: () -> nil,
-	finished: event<boolean>, --- arg is called avoid_resetting_map
+	finished: Signal<boolean>, --- arg is called avoid_resetting_map
 }
 
 declare chat: {
 	send_ingame_notification: (message: string) -> nil, --- does not yield
 	set_spawning_disabled_reason: (reason: string) -> nil,
 	send_announcement: (message: string, color: Color3?) -> nil, --- color doesnt seem to do anything currently
-	player_chatted: event<string, string, string>, --- player_name, channel, message
+	player_chatted: Signal<string, string, string>, --- player_name, channel, message
 }
 
 export type weapon_slot = "primary" | "secondary" | "throwable1" | "throwable2"
@@ -256,7 +257,7 @@ type memory_signal_methods<T> = {
 
 type memory_signal<T> = {
 	value: T,
-	changed: event<T>,
+	changed: Signal<T>,
 } & memory_signal_methods<T>
 
 declare game_data: {
@@ -289,10 +290,10 @@ declare game_data: {
 }
 
 declare load_modfile: (string) -> unknown
-declare on_modfile_loaded: event<unknown>
+declare on_modfile_loaded: Signal<unknown>
 
 -- todo client networking stuff, not confident its this anyway
-declare on_client_event: event<(string, ...any)>
+declare on_client_event: Signal<(string, ...any)>
 
 export type interactable = {
 	new: (instance: luauInstance) -> interactable,

@@ -1,5 +1,4 @@
 -- remember to reload the window after changing this
--- todo: figure out under what global the event class is stored as
 
 -- refer to export/sharedvars.luau for the full list of sharedvars
 declare sharedvars_descriptions: {[string]: string}
@@ -34,26 +33,29 @@ export type Spring = {
 } & Spring_methods
 declare Spring: Spring_methods
 
-export type event_connection = {} -- todo
-export type event_methods<args...> = {
+export type signal_connection = {} -- todo
+export type Signal<args...> = {
 	-- todo on all of these
+	_head: boolean,
 	DisconnectAll: unknown, -- cant get this to not error?
 	is: unknown,
 	wrap: unknown, -- no idea what this would even be for
-	Connect: (self: event<args...>, callback: (args...) -> nil) -> event_connection,
+	Connect: (self: Signal<args...>, callback: (args...) -> nil) -> signal_connection,
 	Destroy: unknown,
 	Fire: unknown,
 	Wait: unknown,
-	Once: (self: event<args...>, callback: (args...) -> nil) -> unknown, -- presumably?
-	new: () -> event<args...>,
+	Once: (self: Signal<args...>, callback: (args...) -> nil) -> unknown, -- presumably?
+	new: () -> Signal<args...>,
 }
-export type event<args...> = {
-
-} & event_methods<args...>
+declare Signal: {
+	is: unknown,
+	wrap: unknown,
+	new: <args...>() -> Signal<args...>,
+}
 
 declare time: {
-	renderstep: (label: string, callback: (delta_time: number) -> nil) -> event_connection,
-	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> event_connection,
+	renderstep: (label: string, callback: (delta_time: number) -> nil) -> signal_connection,
+	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> signal_connection,
 	update_heartbeat: (delta_time: number) -> nil,
 	wait: (length: number) -> boolean, --- always returns true, idk why
 	delay: (seconds: number, () -> nil) -> nil,
@@ -62,10 +64,10 @@ declare time: {
 	play_sound: (object: Sound) -> unknown, -- errors currently, because it cant access .Play
 	get_speed: () -> number,
 	set_local_timescale: (timescale: number) -> nil, --- seems to only change the ui speed, no gameplay changes
-	local_timescale_changed: event<nil>, --- I checked any it really doesnt get any args
+	local_timescale_changed: Signal<nil>, --- I checked any it really doesnt get any args
 }
 
--- print returns as luauInstance(INSTANCE_NAME), just stealing that
+-- prints as luauInstance(INSTANCE_NAME), just stealing that
 export type luauInstance = {
 	play: () -> nil,
 	stop: () -> nil,
