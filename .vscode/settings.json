@@ -1,8 +1,8 @@
 {
     "luau-lsp.types.definitionFiles": [
-		"./export/shared/globals.d.luau",
-		"./export/shared/sharedvars.d.luau",
-		"./export/server/globals.d.luau",
+		"./shared/globals.d.luau",
+		"./shared/sharedvars.d.luau",
+		"./server/globals.d.luau",
     ],
     "luau-lsp.sourcemap.enabled": false,
 }
