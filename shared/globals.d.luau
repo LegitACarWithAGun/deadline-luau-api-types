@@ -53,6 +53,25 @@ declare Signal: {
 	new: <args...>() -> Signal<args...>,
 }
 
+-- idk why deadline has multiple signal types
+export type MicroSignal_connection = {
+	_fn: unknown,
+	Connected: boolean,
+	_signal: unknown,
+	_varargs: boolean,
+	_prev: boolean,
+	_next: unknown,
+
+	-- meta
+	Destroy: unknown,
+	Reconnect: unknown,
+	__index: unknown,
+	Disconnect: unknown,
+}
+export type MicroSignal<args...> = {
+	Connect: (self: MicroSignal<args...>, callback: (args...) -> nil) -> MicroSignal_connection
+}
+
 declare time: {
 	renderstep: (label: string, callback: (delta_time: number) -> nil) -> signal_connection,
 	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> signal_connection,

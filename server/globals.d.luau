@@ -295,8 +295,24 @@ declare on_modfile_loaded: Signal<unknown>
 -- todo client networking stuff, not confident its this anyway
 declare on_client_event: Signal<(string, ...any)>
 
+-- already reported this
+--- melee makes the only field be type
+export type killer_data = {
+	type: string, --- "firearm", "grenade", "melee"
+	name: string?, -- player name, nil with type == "melee"
+	distance: string?, -- nil with type == "melee"
+	weapon_setup: string?, --- type "grenade" and "melee" leave this nil
+	weapon: string?, -- weapon name, nil with type == "melee"
+}
+declare on_player_died: MicroSignal<string, Vector3, killer_data, boolean> -- player name
+declare on_player_left: MicroSignal<string> --- player name
+declare on_player_joined: MicroSignal<string> --- player name
+declare on_player_spawned: MicroSignal<string> --- player name
+
 export type interactable = {
 	new: (instance: luauInstance) -> interactable,
 	interact: (self: interactable, player: player) -> nil,
 }
 declare register_interactable: (attribute: string, class: interactable) -> unknown
+
+
