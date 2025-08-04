@@ -293,7 +293,7 @@ declare load_modfile: (string) -> unknown
 declare on_modfile_loaded: Signal<unknown>
 
 -- todo client networking stuff, not confident its this anyway
-declare on_client_event: Signal<(string, ...any)>
+declare on_client_event: MicroSignal<(string, ...any)>
 
 -- already reported this
 --- melee makes the only field be type
@@ -315,4 +315,35 @@ export type interactable = {
 }
 declare register_interactable: (attribute: string, class: interactable) -> unknown
 
+-- dont know what this describes
+declare is_high_privileged: boolean
 
+-- this module needs a lot more research than what I can currently spend.
+-- glhf <3
+export type setup_data = {
+	data: string, -- json
+	version: string, -- game version?
+	weapon: string, -- weapon name
+}
+export type setup = {
+	status: "failed" | "_" | string,
+	data: "no code" | setup_data
+}
+export type setup_status = {
+	state: {
+		broken: boolean,
+		sources: unknown,
+		reason: string,
+	},
+	rail_state: {
+		sources: unknown,
+		failures: unknown,
+	},
+}
+declare weapons: {
+	get_setup_from_code: (code: string) -> setup,
+	get_setup_status: (data: setup_data) -> setup_status | string,
+}
+
+-- player name, see sharedvars.vip_owner, prolly has extra functionality that I cant test rn
+declare function_caller: string

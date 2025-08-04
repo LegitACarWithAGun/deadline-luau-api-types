@@ -163,3 +163,12 @@ declare query: {
 	spherecast: (position: Vector3, radius: number, direction: Vector3, params: raycast_params) -> raycast_result?,
 	blockcast: (cframe: CFrame, size: Vector3, direction: Vector3, params: raycast_params) -> raycast_result,
 }
+
+declare is_studio: () -> boolean
+declare is_private_server: () -> boolean
+
+--- a blue version of print/warn
+declare info: (...) -> nil 
+
+--- dont know what this does, neither on the client or the server
+declare output_trace: (unknown) -> unknown
