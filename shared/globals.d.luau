@@ -168,7 +168,7 @@ declare is_studio: () -> boolean
 declare is_private_server: () -> boolean
 
 --- a blue version of print/warn
-declare info: (...) -> nil 
+declare info: (...any) -> nil 
 
 --- dont know what this does, neither on the client or the server
 declare output_trace: (unknown) -> unknown

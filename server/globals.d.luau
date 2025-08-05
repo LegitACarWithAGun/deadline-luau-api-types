@@ -52,12 +52,12 @@ export type ammo_data = {
 		magazine_type: string, -- todo; standard
 	},
 }
-type setup = string
+export type setup_json = string
 export type weapon_data = {
 	ammo: ammo_data,
 	type: "weapon",
 	client_data: {
-		setup: setup, -- todo same json
+		setup: setup_json, -- todo same json
 		name: string,
 		type: "weapon",
 		flashlight_enabled: boolean,
@@ -90,7 +90,7 @@ export type player = {
 	set_animation_speed: (mult: number) -> nil, -- doesnt apply until you spawn again
 	get_position: () -> Vector3?,
 	get_weapon_from_loadout: (loadout: number, slot: weapon_slot) -> {
-		data: setup, -- todo: format for this
+		data: setup_json, -- todo: format for this
 		weapon: string,	
 	} | string, --- if error, returns a string
 	kick: () -> unknown,
@@ -99,7 +99,7 @@ export type player = {
 	get_weapon_data_from_character: weapon_data,
 	spawn: () -> unknown, -- seems to return a table with with index 1 being a bool, 2 a string, cant define that tho
 	respawn: () -> unknown, -- same return as player.spawn()
-	set_weapon: (slot: weapon_slot, weapon: string | "nothing", setup: setup | "[]" | nil) -> nil,
+	set_weapon: (slot: weapon_slot, weapon: string | "nothing", setup: setup_json | "[]" | nil) -> nil,
 	get_team: () -> team_id,
 	set_team: (team: team_id) -> nil,
 	equip_weapon: (slot: weapon_slot, put_away_instantly: boolean?) -> nil,
@@ -321,7 +321,7 @@ declare is_high_privileged: boolean
 -- this module needs a lot more research than what I can currently spend.
 -- glhf <3
 export type setup_data = {
-	data: string, -- json
+	data: setup_json,
 	version: string, -- game version?
 	weapon: string, -- weapon name
 }
