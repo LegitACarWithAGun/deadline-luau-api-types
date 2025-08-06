@@ -1,8 +1,8 @@
 {
     "luau-lsp.types.definitionFiles": [
-		"./shared/globals.d.luau",
+		"./shared/shared-globals.d.luau",
 		"./shared/sharedvars.d.luau",
-		"./server/globals.d.luau",
+		"./server/server-globals.d.luau",
     ],
     "luau-lsp.sourcemap.enabled": false,
 	"luau-lsp.types.disabledGlobals": [ // generated using ./src/disabled_globals.luau, note that you need to manually copy this over to your settings.json file currently
