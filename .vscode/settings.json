@@ -1,5 +1,6 @@
 {
     "luau-lsp.types.definitionFiles": [
+		"./shared/shared-types.d.luau",
 		"./shared/shared-globals.d.luau",
 		"./shared/sharedvars.d.luau",
 		"./server/server-globals.d.luau",
