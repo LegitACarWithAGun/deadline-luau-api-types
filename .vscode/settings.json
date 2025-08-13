@@ -4,6 +4,7 @@
 		"./shared/shared-globals.d.luau",
 		"./shared/sharedvars.d.luau",
 		"./server/server-globals.d.luau",
+		"./client/client-globals.d.luau", // comment this one out if youre not actively doing something on the client, overrides some server ones, todo
     ],
     "luau-lsp.sourcemap.enabled": false,
 	"luau-lsp.types.disabledGlobals": [ // generated using ./src/disabled_globals.luau, note that you need to manually copy this over to your settings.json file currently

@@ -1,4 +1,4 @@
-## Type definition files for Deadline's insitux luau api
+## Type definition files for Deadline's luau modding api
 intended to be used with [JohnnyMorganz/luau-lsp](https://github.com/JohnnyMorganz/luau-lsp) in vscode ([vscode extension](https://marketplace.visualstudio.com/items?itemName=JohnnyMorganz.luau-lsp))
 
 ### Usage:
