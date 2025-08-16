@@ -24,7 +24,7 @@ declare sharedvars: {
 	api_messaging_enabled: boolean,
 
 	--- Newest server version
-	--- Default: 0.24.2
+	--- Default: 0.24.3
 	api_newest_server_version: string,
 
 	--- Game update message shown to returning players
@@ -44,7 +44,7 @@ declare sharedvars: {
 	chat_disable: boolean,
 
 	--- Maximum chat history
-	--- Default: 20
+	--- Default: 25
 	chat_max_history: number,
 
 	--- How often chat tips are shown
@@ -204,7 +204,7 @@ declare sharedvars: {
 	game_branch: string,
 
 	--- (READ-ONLY) Game version
-	--- Default: 0.24.2
+	--- Default: 0.24.3
 	game_version: string,
 
 	--- Whether loadout editing is disabled
@@ -254,6 +254,10 @@ declare sharedvars: {
 	--- The amount of players a team can be unbalanced by before team switching isn't allowed
 	--- Default: 2
 	gm_team_balancing_threshold: number,
+
+	--- Whether team scrambling is enabled when a match starts
+	--- Default: true
+	gm_team_scrambling: boolean,
 
 	--- How long to wait before capturing a point in other gamemodes
 	--- Default: 15
@@ -728,7 +732,7 @@ declare sharedvars: {
 	ro_spawning_disabled_reason: string,
 
 	--- Server creation time
-	--- Default: 1753901842.732335
+	--- Default: 1755367282.657926
 	sv_creation_time: number,
 
 	--- Server day cycle speed in seconds. A value of 1 is 1:1 to real life
@@ -752,7 +756,7 @@ declare sharedvars: {
 	sv_load_only_preloaded_attachments: boolean,
 
 	--- Geographical server location
-	--- Default: Paris (France)
+	--- Default: No known location
 	sv_location: string,
 
 	--- How long the intermission between matches lasts
