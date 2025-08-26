@@ -3,6 +3,20 @@
 export type camera_controller = {
 	new: (get_head_cframe: unknown) -> camera_controller,
 	update: (self: camera_controller, delta_time: number) -> unknown,
+
+	-- created by the game
+	offset: Vector3,
+	roll: number,
+	sensitivity: number,
+	input: {
+		jump: boolean,
+		movementX: number,
+		movementY: number,
+		movementZ: number,
+		using_freecam: boolean,
+	},
+	reduced_y_limit: boolean,
+	mouse_delta: Vector2,
 }
 declare register_camera_mode: (name: string, class: camera_controller) -> unknown
 
@@ -20,9 +34,10 @@ declare fire_server: (...any) -> nil
 declare local_player: string
 
 
+export type InputType = number
 declare InputType: {
-	Began: number,
-	Ended: number,
+	Began: InputType,
+	Ended: InputType,
 }
 
 declare input: {
@@ -46,7 +61,7 @@ declare input: {
 
 -- todo
 type ClientInputGroup_methods = {
-	bind_user_setting: unknown,
+	bind_user_setting: (self: ClientInputGroup, callback: (unknown) -> unknown, InputType, action: keybind_name) -> unknown,
 	bind: unknown,
 	disconnect_all_binds: unknown,
 	constructor: unknown,
@@ -150,7 +165,7 @@ declare config: {
 		legal: {settings_row},
 	},
 	keybinds: {
-		[string]: {
+		[keybind_name]: {
 			name: string,
 			description: string,
 			default: { {
