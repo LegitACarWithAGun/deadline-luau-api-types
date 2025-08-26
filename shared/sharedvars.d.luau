@@ -1,3 +1,6 @@
+-- generated using ./src/import_sharedvars.luau
+-- do not manually edit this
+
 declare sharedvars: {
 	--- Whether staying in the air will kill you
 	--- Default: true
@@ -732,7 +735,7 @@ declare sharedvars: {
 	ro_spawning_disabled_reason: string,
 
 	--- Server creation time
-	--- Default: 1755367282.657926
+	--- Default: 1756221762.658987
 	sv_creation_time: number,
 
 	--- Server day cycle speed in seconds. A value of 1 is 1:1 to real life
@@ -756,7 +759,7 @@ declare sharedvars: {
 	sv_load_only_preloaded_attachments: boolean,
 
 	--- Geographical server location
-	--- Default: No known location
+	--- Default: Paris (France)
 	sv_location: string,
 
 	--- How long the intermission between matches lasts

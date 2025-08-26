@@ -49,6 +49,7 @@ end
 
 -- add any sharedvars that werent in sharedvars_descriptions
 -- user will get warned of them later
+-- TODO: for-pairs does not work on sharedvars
 local vars_without_type_information: {string} = {}
 for name, _value in pairs(sharedvars) do
 	-- check if we already have the sharedvar
@@ -66,7 +67,11 @@ table.sort(sharedvar_list, function(a: sharedvar_info, b: sharedvar_info): boole
 end)
 
 -- print sharedvars for usage as types
-local main_output = "declare sharedvars: {\n"
+local main_output = [[-- generated using ./src/import_sharedvars.luau
+-- do not manually edit this
+
+declare sharedvars: {
+]]
 for i, info in pairs(sharedvar_list) do
 	if i ~= 1 then
 		main_output ..= "\n"
