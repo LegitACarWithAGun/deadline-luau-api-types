@@ -33,14 +33,13 @@ export type Spring = {
 } & Spring_methods
 declare Spring: Spring_methods
 
-export type signal_connection = {} -- todo
 export type Signal<args...> = {
 	-- todo on all of these
 	_head: boolean,
 	DisconnectAll: unknown, -- cant get this to not error?
 	is: unknown,
 	wrap: unknown, -- no idea what this would even be for
-	Connect: (self: Signal<args...>, callback: (args...) -> nil) -> signal_connection,
+	Connect: (self: Signal<args...>, callback: (args...) -> nil) -> RBXScriptConnection,
 	Destroy: unknown,
 	Fire: unknown,
 	Wait: unknown,
@@ -73,8 +72,8 @@ export type MicroSignal<args...> = {
 }
 
 declare time: {
-	renderstep: (label: string, callback: (delta_time: number) -> nil) -> signal_connection,
-	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> signal_connection,
+	renderstep: (label: string, callback: (delta_time: number) -> nil) -> RBXScriptConnection,
+	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> RBXScriptConnection,
 	update_heartbeat: (delta_time: number) -> nil,
 	wait: (length: number) -> boolean, --- always returns true, idk why
 	delay: (seconds: number, () -> nil) -> nil,
