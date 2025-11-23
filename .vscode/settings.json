@@ -1,20 +1,43 @@
 {
-    "luau-lsp.types.definitionFiles": [
+	// copy the contents of this file into your own settings.json
+
+	// prevents the default roblox services from being suggested by intellisense, since importing those is disabled in deadline
+	// IE: game:GetService("AdService"), RunService
+	"luau-lsp.completion.imports.suggestServices": false,
+	// almost definetly not usable in deadline
+    "luau-lsp.sourcemap.enabled": false,
+
+
+
+
+	// ^^^^ OPTIONAL ^^^^^
+	// -----------------
+	// vvvv MANDATORY vvvv
+
+
+
+
+	// adds default roblox types And globals, see luau-lsp.types.disabledGlobals for all the globals that arent used
+	"luau-lsp.platform.type": "roblox",
+
+	// type files for deadline types and globals
+	"luau-lsp.types.definitionFiles": {
 		// shared
-		"./shared/shared-types.d.luau",
-		"./shared/shared-globals.d.luau",
-		"./shared/sharedvars.d.luau",
+		"deadline-shared-types": "./shared/shared-types.d.luau",
+		"deadline-shared-globals": "./shared/shared-globals.d.luau",
+		"deadline-shared-vars": "./shared/sharedvars.d.luau",
 
 		// server
-		"./server/server-globals.d.luau",
+		"deadline-server-globals": "./server/server-globals.d.luau",
 		
 		// client
-		"./client/keybind_name.d.luau",
+		"deadline-client-keybind-names": "./client/keybind_name.d.luau",
 		// comment this one out if youre not actively doing something on the client, overrides some server globals, todo
-		"./client/client-globals.d.luau",
-    ],
-    "luau-lsp.sourcemap.enabled": false,
-	"luau-lsp.types.disabledGlobals": [ // generated using ./src/disabled_globals.luau, note that you need to manually copy this over to your settings.json file currently
+		// "deadline-client-globals": "./client/client-globals.d.luau",
+	},
+
+	// generated using ./src/disabled_globals.luau
+	"luau-lsp.types.disabledGlobals": [
 		"CatalogSearchParams",
 		"Content",
 		"DateTime",
