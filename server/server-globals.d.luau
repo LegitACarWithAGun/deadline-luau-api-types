@@ -10,13 +10,17 @@ export type map_config = {
 }
 
 declare map: {
-	run_vote: () -> string, --- yields
+	--- yields
+	run_vote: () -> string,
 	get_maps: () -> {string},
-	set_time: (hour: number) -> number, --- returns the input?
+	--- returns the input?
+	set_time: (hour: number) -> number,
 	kill_map_lights: () -> nil,
 	set_preset: (lighting_preset: string) -> nil,
-	set_map_from_config: (config: map_config) -> nil, --- yields
-	set_map: (map_name: string) -> nil, --- yields
+	--- yields
+	set_map_from_config: (config: map_config) -> nil,
+	--- yields
+	set_map: (map_name: string) -> nil,
 }
 
 --- todo prolly unintentional and unusable
@@ -25,18 +29,24 @@ export type gamemode_class = { }
 --- https://recoil-group.github.io/deadline-modding/making-mods/scripting/api/#gamemode
 declare gamemode: {
 	available_gamemodes: {[string]: () -> gamemode_class},
-	set_gamemode: unknown, -- hard to use
-	force_set_gamemode: (mode_name: string) -> nil, --- yields
+	-- hard to use
+	set_gamemode: unknown,
+	--- yields
+	force_set_gamemode: (mode_name: string) -> nil,
 	started: Signal<nil>,
 	finish: () -> nil,
-	finished: Signal<boolean>, --- arg is called avoid_resetting_map
+	--- arg is called avoid_resetting_map
+	finished: Signal<boolean>,
 }
 
 declare chat: {
-	send_ingame_notification: (message: string) -> nil, --- does not yield
+	--- does not yield
+	send_ingame_notification: (message: string) -> nil,
 	set_spawning_disabled_reason: (reason: string) -> nil,
-	send_announcement: (message: string, color: Color3?) -> nil, --- color doesnt seem to do anything currently
-	player_chatted: Signal<string, string, string>, --- player_name, channel, message
+	--- color doesnt seem to do anything currently
+	send_announcement: (message: string, color: Color3?) -> nil,
+	--- username, channel, message
+	player_chatted: Signal<string, string, string>,
 }
 
 export type weapon_slot = "primary" | "secondary" | "throwable1" | "throwable2"
@@ -45,11 +55,13 @@ export type ammo_data = {
 	loose_magazines: {number},
 	is_round_chambered_spent: boolean,
 	is_round_chambered: boolean,
-	type: string, -- todo; detachable_magazine
+	-- todo
+	type: string | "detachable_magazine",
 	rounds_in_magazine: number,
 	metadata: {
 		magazine_capacity: number,
-		magazine_type: string, -- todo; standard
+		-- todo
+		magazine_type: string | "standard",
 	},
 }
 export type setup_json = string
@@ -57,7 +69,7 @@ export type weapon_data = {
 	ammo: ammo_data,
 	type: "weapon",
 	client_data: {
-		setup: setup_json, -- todo same json
+		setup: setup_json,
 		name: string,
 		type: "weapon",
 		flashlight_enabled: boolean,
@@ -69,7 +81,7 @@ export type weapon_data = {
 
 export type throwable_data = {
 	name: string,
-	type: "throwable", -- throwable
+	type: "throwable",
 }
 
 export type team_id = "attacker" | "defender"
@@ -87,18 +99,22 @@ export type player = {
 	get_active_slot: () -> weapon_slot?,
 	set_speed: (mult: number) -> nil,
 	get_animation_speed: () -> number,
-	set_animation_speed: (mult: number) -> nil, -- doesnt apply until you spawn again
+	--- doesnt apply until you spawn again
+	set_animation_speed: (mult: number) -> nil,
 	get_position: () -> Vector3?,
+	--- if error, returns a string
 	get_weapon_from_loadout: (loadout: number, slot: weapon_slot) -> {
-		data: setup_json, -- todo: format for this
+		data: setup_json,
 		weapon: string,	
-	} | string, --- if error, returns a string
+	} | string,
 	kick: () -> unknown,
 	refill_ammo: () -> nil,
 	player_id: number,
 	get_weapon_data_from_character: weapon_data,
-	spawn: () -> unknown, -- seems to return a table with with index 1 being a bool, 2 a string, cant define that tho
-	respawn: () -> unknown, -- same return as player.spawn()
+	--- seems to return a table with with index 1 being a bool, 2 a string, cant define that tho
+	spawn: () -> unknown,
+	--- same return as player.spawn()
+	respawn: () -> unknown,
 	set_weapon: (slot: weapon_slot, weapon: string | "nothing", setup: setup_json | "[]" | nil) -> nil,
 	get_team: () -> team_id,
 	set_team: (team: team_id) -> nil,
@@ -168,17 +184,19 @@ declare players: {
 	reset_ragdolls: () -> nil,
 	get_alive: () -> {player},
 	get_by_userid: (userid: number) -> player?,
+	--- username
 	get: (name: string) -> player?,
 }
 
 declare spawning: {
 	monster: () -> string,
-	bot: () -> string, --- returns the name of the bot
+	--- returns the name of the bot
+	bot: () -> string,
 	explosion: (position: Vector3) -> nil,
 }
 
 
--- todo not 100% on this, surely this is documented somewhere tho
+-- todo: not 100% on this, surely this is documented somewhere tho
 export type sound_preset = {{
 	id: string,
 	occlude_inside: boolean,
@@ -211,7 +229,7 @@ declare game_data: {
 		code: string,
 		minimap: {
 			size: number,
-			image: string, --- roblox asset id
+			image: rbxassetid,
 		},
 		sound_preset: string,
 		name: string,
@@ -222,16 +240,20 @@ declare game_data: {
 		},
 		lighting_preset: string,
 		images: {
-			thumbnail_night: string, --- roblox asset id
-			thumbnail_day: string, --- roblox asset id
+			thumbnail_night: rbxassetid,
+			thumbnail_day: rbxassetid,
 		},
 	}>,
-	gamemode: memory_signal<string>, --- weird behavior that I need to make a bug report about
+	--- number as a string, every gamemode seems to have a fixed value
+	gamemode: memory_signal<string>,
 	map_loaded: memory_signal<boolean>,
-	lighting: memory_signal<string>, --- lighting preset name
+	--- lighting preset name
+	lighting: memory_signal<string>,
 	map_config: memory_signal<map_config>,
-	map_code: memory_signal<string>, --- the name you use to load the map
-	gamemode_title: memory_signal<string>, --- user-facing gamemode name
+	--- the name you use to load the map
+	map_code: memory_signal<string>,
+	--- user-facing gamemode name
+	gamemode_title: memory_signal<string>,
 }
 
 declare load_modfile: (string) -> unknown
@@ -243,16 +265,24 @@ declare on_client_event: MicroSignal<(string, ...any)>
 -- already reported this
 --- melee makes the only field be type
 export type killer_data = {
-	type: string, --- "firearm", "grenade", "melee"
-	name: string?, -- player name, nil with type == "melee"
-	distance: string?, -- nil with type == "melee"
-	weapon_setup: string?, --- type "grenade" and "melee" leave this nil
-	weapon: string?, -- weapon name, nil with type == "melee"
+	type: string | "firearm" | "grenade" | "melee",
+	--- username, nil with type == "melee"
+	name: string?,
+	--- nil with type == "melee"
+	distance: string?,
+	--- nil with type == "melee" or type == "grenade"
+	weapon_setup: string?,
+	-- nil with type == "melee"
+	weapon: string?,
 }
-declare on_player_died: MicroSignal<string, Vector3, killer_data, boolean> -- player name
-declare on_player_left: MicroSignal<string> --- player name
-declare on_player_joined: MicroSignal<string> --- player name
-declare on_player_spawned: MicroSignal<string> --- player name
+--- username, position, killer_data, stats_counted
+declare on_player_died: MicroSignal<string, Vector3, killer_data, boolean>
+--- username
+declare on_player_left: MicroSignal<string>
+--- username
+declare on_player_joined: MicroSignal<string>
+--- username
+declare on_player_spawned: MicroSignal<string>
 
 export type interactable = {
 	new: (instance: luauInstance) -> interactable,
@@ -260,10 +290,10 @@ export type interactable = {
 }
 declare register_interactable: (attribute: string, class: interactable) -> unknown
 
--- dont know what this describes
+--- dont know what this describes
 declare is_high_privileged: boolean
 
--- this module needs a lot more research than what I can currently spend.
+-- todo: this module needs a lot more research than what I can currently spend.
 -- glhf <3
 export type setup_data = {
 	data: setup_json,
@@ -290,5 +320,5 @@ declare weapons: {
 	get_setup_status: (data: setup_data) -> setup_status | string,
 }
 
--- player name, see sharedvars.vip_owner, prolly has extra functionality that I cant test rn
+--- player username
 declare function_caller: string

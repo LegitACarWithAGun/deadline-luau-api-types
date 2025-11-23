@@ -1,7 +1,7 @@
 type lighting_values<T> = {
 	night: T,
 	dat: T,
-	datatype: string, -- "number", "color"
+	datatype: string | "number" | "color",
 }
 export type lighting_preset = {
 	instance_properties: {

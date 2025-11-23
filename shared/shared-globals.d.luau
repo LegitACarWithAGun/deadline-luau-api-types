@@ -23,27 +23,34 @@ type Spring_methods = {
 	new: (mass: number?, force: number?, damping: number?, speed: number?) -> Spring,
 }
 export type Spring = {
-	mass: number, -- 0.8
-	force: number, -- 40
-	damping: number, -- 6
-	speed: number, -- 1.9
+	--- default: 0.8
+	mass: number,
+	--- default: 40
+	force: number,
+	--- default: 6
+	damping: number,
+	--- default: 1.9
+	speed: number,
 	position: Vector3,
 	target: Vector3,
 	velocity: Vector3,
 } & Spring_methods
 declare Spring: Spring_methods
 
+--- todo: proper typing for this
 export type Signal<args...> = {
-	-- todo on all of these
 	_head: boolean,
-	DisconnectAll: unknown, -- cant get this to not error?
+	--- todo: cant get this to not error
+	DisconnectAll: unknown,
 	is: unknown,
-	wrap: unknown, -- no idea what this would even be for
+	--- dont know what this is for
+	wrap: unknown,
 	Connect: (self: Signal<args...>, callback: (args...) -> nil) -> RBXScriptConnection,
 	Destroy: unknown,
 	Fire: unknown,
 	Wait: unknown,
-	Once: (self: Signal<args...>, callback: (args...) -> nil) -> unknown, -- presumably?
+	--- not super confident in the signature for this
+	Once: (self: Signal<args...>, callback: (args...) -> nil) -> unknown,
 	new: () -> Signal<args...>,
 }
 declare Signal: {
@@ -75,14 +82,18 @@ declare time: {
 	renderstep: (label: string, callback: (delta_time: number) -> nil) -> RBXScriptConnection,
 	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> RBXScriptConnection,
 	update_heartbeat: (delta_time: number) -> nil,
-	wait: (length: number) -> boolean, --- always returns true, idk why
+	--- always returns true, idk why
+	wait: (length: number) -> boolean,
 	delay: (seconds: number, () -> nil) -> nil,
 	get_time: () -> number,
 	get_synced_time: () -> number,
-	play_sound: (object: Sound) -> unknown, -- errors currently, because it cant access .Play
+	--- errors currently, because it cant access .Play
+	play_sound: (object: Sound) -> unknown,
 	get_speed: () -> number,
-	set_local_timescale: (timescale: number) -> nil, --- seems to only change the ui speed, no gameplay changes
-	local_timescale_changed: Signal<nil>, --- I checked any it really doesnt get any args
+	--- seems to only change the ui speed, no gameplay changes
+	set_local_timescale: (timescale: number) -> nil,
+	--- seemingly doesnt get args
+	local_timescale_changed: Signal<nil>,
 }
 
 -- prints as luauInstance(INSTANCE_NAME), just stealing that
@@ -104,7 +115,8 @@ export type luauInstance = {
 	get_descendants: () -> {luauInstance},
 	get_children: () -> {luauInstance},
 	clone: () -> luauInstance,
-	__secure_get_owner: (unknown) -> unknown, -- errors as `post-opcode sandbox escape detected`, glhf <3
+	--- errors as `post-opcode sandbox escape detected`, glhf <3
+	__secure_get_owner: (unknown) -> unknown,
 	Parent: luauInstance,
 	Name: string,
 
@@ -112,12 +124,13 @@ export type luauInstance = {
 	-- TODO
 	-- properties that depend on the type of instance
 	-- you also do not have access to every property and method.
-	Volume: number?, -- only on sound objects
+	--- only on sound objects
+	Volume: number?,
 	apply_impulse_at_position: nil | (impulse: Vector3, position: Vector3) -> nil,
 	apply_angular_impulse_at_position: nil | (impulse: Vector3, position: Vector3) -> nil,
 	apply_impulse: nil | (impulse: Vector3) -> nil,
 	set_network_owner: nil | (player: string) -> nil,
-	-- get_primary_part: () -> luauInstance?, -- whered I get this one from?
+	-- get_primary_part: () -> luauInstance?, -- idk where I got this one from?
 }
 
 declare create_instance: (instance_name: string) -> luauInstance
@@ -140,11 +153,15 @@ export type raycast_params = {
 	filter_descendants_instances: ({luauInstance}) -> nil,
 	collision_group: (name: string) -> nil,
 	filter_type: (filter: Enum.RaycastFilterType) -> nil,
-	add_to_filter: (list: luauInstance | {luauInstance}) -> nil, 
-	ignore_water: (boolean) -> nil, --- cant confirm the input currently
-	respect_can_collide: (boolean) -> nil, --- cant confirm the input currently
-	brute_force: (boolean) -> nil, --- cant confirm the input currently
-	__NOMINAL: string, -- always "luauRaycastParams". If I had to guess, its prolly a class identifier
+	add_to_filter: (list: luauInstance | {luauInstance}) -> nil,
+	--- cant confirm the input currently
+	ignore_water: (boolean) -> nil,
+	--- cant confirm the input currently
+	respect_can_collide: (boolean) -> nil,
+	--- cant confirm the input currently
+	brute_force: (boolean) -> nil,
+	--- always "luauRaycastParams". If I had to guess, its prolly a class identifier
+	__NOMINAL: string,
 	__secure_get_owner: () -> RaycastParams,
 }
 export type raycast_result = {
@@ -156,10 +173,13 @@ export type raycast_result = {
 }
 declare query: {
 	create_raycast_params: () -> raycast_params,
-	-- not super confident in all of these, since I cant properly test these
+	--- not super confident in the signature for these
 	raycast: (origin: Vector3, direction: Vector3, params: raycast_params) -> raycast_result?,
+	--- not super confident in the signature for these
 	shapecast: (part: luauInstance, direction: Vector3, params: raycast_params) -> raycast_result?,
+	--- not super confident in the signature for these
 	spherecast: (position: Vector3, radius: number, direction: Vector3, params: raycast_params) -> raycast_result?,
+	--- not super confident in the signature for these
 	blockcast: (cframe: CFrame, size: Vector3, direction: Vector3, params: raycast_params) -> raycast_result,
 }
 
