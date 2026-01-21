@@ -49,7 +49,7 @@ declare chat: {
 	player_chatted: Signal<string, string, string>,
 }
 
-export type weapon_slot = "primary" | "secondary" | "throwable1" | "throwable2"
+export type weapon_slot = string | "primary" | "secondary" | "throwable1" | "throwable2"
 
 export type ammo_data = {
 	loose_magazines: {number},
@@ -65,24 +65,27 @@ export type ammo_data = {
 	},
 }
 export type setup_json = string
-export type weapon_data = {
+export type weapon_client_data = {
+	setup: setup_json,
+	name: string,
+	type: "weapon",
+	flashlight_enabled: boolean,
+	ammo: ammo_data,
+	laser_enabled: boolean,
+	id: string,
+}
+--- also includes knifes, guns, and launchers, no way to tell the difference besides name afaik
+export type gun_data = {
 	ammo: ammo_data,
 	type: "weapon",
-	client_data: {
-		setup: setup_json,
-		name: string,
-		type: "weapon",
-		flashlight_enabled: boolean,
-		ammo: ammo_data,
-		laser_enabled: boolean,
-		id: string,
-	},
+	client_data: weapon_client_data,
 }
-
 export type throwable_data = {
 	name: string,
 	type: "throwable",
 }
+--- Bad data format, select gun or throwable by checking against .type
+export type weapon_data = gun_data | throwable_data
 
 export type team_id = "attacker" | "defender"
 
@@ -110,7 +113,7 @@ export type player = {
 	kick: () -> unknown,
 	refill_ammo: () -> nil,
 	player_id: number,
-	get_weapon_data_from_character: weapon_data,
+	get_weapon_data_from_character: (slot_name: weapon_slot) -> weapon_data,
 	--- seems to return a table with with index 1 being a bool, 2 a string, cant define that tho
 	spawn: () -> unknown,
 	--- same return as player.spawn()
