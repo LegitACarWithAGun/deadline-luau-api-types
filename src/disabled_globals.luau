@@ -1,11 +1,10 @@
 -- this scripts exists to get a list of roblox globals that arent accessible in the sandbox
-
--- this script creates a script that prints every roblox global that doesnt have a value in the sandbox
+-- creates a script that prints every roblox global that doesnt have a value in the sandbox
 
 -- usage:
--- - run this script, any lua runtime that supports pairs, and the table library works
--- - run the output of that in deadline's console
--- - copy the outputs to .vscode/settings.json -> luau-lsp.types.disabledGlobals
+-- 1. run this script, any lua runtime that supports the `pairs` function and the table library works
+-- 2. run the output of that in Either deadline console
+-- 3. copy the output to .vscode/settings.json -> luau-lsp.types.disabledGlobals
 
 local default_globals = {
 	-- https://create.roblox.com/docs/reference/engine/globals/LuaGlobals
@@ -119,7 +118,6 @@ local default_globals = {
 	"utf8",
 	"vector",
 }
-
 
 -- generate script
 
