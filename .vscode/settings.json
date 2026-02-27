@@ -32,7 +32,7 @@
 		
 		// client
 		"deadline-client-keybind-names": "./client/keybind_name.d.luau",
-		// comment this one out if youre not actively doing something on the client, overrides some server globals, todo
+		// temporarily broken, depends on deadline-shared- but it gets loaded before they do
 		// "deadline-client-globals": "./client/client-globals.d.luau",
 	},
 
