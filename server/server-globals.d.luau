@@ -129,7 +129,7 @@ export type player = {
 	set_jump_multiplier: (mult: number) -> nil,
 	set_initial_health: (health: number) -> nil,
 	set_custom_camera_mode: (name: string) -> unknown,
-	set_camera_mode: (mode: "Default" | "Freecam" | "TPerson") -> nil,
+	set_camera_mode: (mode: string | "Default" | "Freecam" | "TPerson") -> nil,
 	name: string,
 	is_bot: () -> boolean,
 	is_alive: () -> boolean,
