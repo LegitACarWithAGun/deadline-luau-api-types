@@ -45,12 +45,12 @@ export type Signal<args...> = {
 	is: unknown,
 	--- dont know what this is for
 	wrap: unknown,
-	Connect: (self: Signal<args...>, callback: (args...) -> nil) -> RBXScriptConnection,
+	Connect: (self: Signal<args...>, callback: (args...) -> ()) -> RBXScriptConnection,
 	Destroy: unknown,
 	Fire: unknown,
 	Wait: unknown,
 	--- not super confident in the signature for this
-	Once: (self: Signal<args...>, callback: (args...) -> nil) -> unknown,
+	Once: (self: Signal<args...>, callback: (args...) -> ()) -> unknown,
 	new: () -> Signal<args...>,
 }
 declare Signal: {
@@ -75,16 +75,16 @@ export type MicroSignal_connection = {
 	Disconnect: unknown,
 }
 export type MicroSignal<args...> = {
-	Connect: (self: MicroSignal<args...>, callback: (args...) -> nil) -> MicroSignal_connection
+	Connect: (self: MicroSignal<args...>, callback: (args...) -> ()) -> MicroSignal_connection
 }
 
 declare time: {
-	renderstep: (label: string, callback: (delta_time: number) -> nil) -> RBXScriptConnection,
-	heartbeat: (label: string, callback: (delta_time: number) -> nil) -> RBXScriptConnection,
+	renderstep: (label: string, callback: (delta_time: number) -> ()) -> RBXScriptConnection,
+	heartbeat: (label: string, callback: (delta_time: number) -> ()) -> RBXScriptConnection,
 	update_heartbeat: (delta_time: number) -> nil,
 	--- always returns true, idk why
 	wait: (length: number) -> boolean,
-	delay: (seconds: number, () -> nil) -> nil,
+	delay: (seconds: number, () -> ()) -> nil,
 	get_time: () -> number,
 	get_synced_time: () -> number,
 	--- errors currently, because it cant access .Play
