@@ -15,8 +15,8 @@ intended to be used with [JohnnyMorganz/luau-lsp](https://github.com/JohnnyMorga
 ### TODO:
 - [ ] `luau-lsp.types.definitionFiles` doesnt seem to take globs
 - [ ] seemingly no way to for client and server definitions to only apply seperatlely
-  - [ ] client type definitions
+  - [x] client type definitions
 - [ ] not all globals are here yet
-- [ ] comments in definition files dont work yet (upstream)
+- [x] comments in definition files dont work yet (upstream)
   - [ ] write better comments for everything
 - [ ] disabled globals need to be manually ported over to each project, annoying!
