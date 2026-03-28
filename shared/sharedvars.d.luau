@@ -14,12 +14,16 @@ declare sharedvars: {
 	--- Default: 15
 	ac_shot_timeout: number,
 
+	--- .
+	--- Default: true
+	ac_sound_kill: boolean,
+
 	--- Whether analytics are enabled
 	--- Default: false
 	api_analytics_enabled: boolean,
 
 	--- Game-wide announcement
-	--- Default: You can restore your game data in the settings. Keep trying if it doesn't work.
+	--- Default: 
 	api_announcement: string,
 
 	--- Whether the server will handle messages from deadlinegame.com
@@ -27,24 +31,140 @@ declare sharedvars: {
 	api_messaging_enabled: boolean,
 
 	--- Newest server version
-	--- Default: 0.24.3
+	--- Default: 0.25.2
 	api_newest_server_version: string,
 
 	--- Game update message shown to returning players
-	--- Default: You can restore your game data in the settings. Keep trying if it doesn't work.
+	--- Default: Welcome to 0.25.2! We added several new grenades, improved performance and made QOL changes. Have fun!
 	api_update_message: string,
 
 	--- How close a bot has to be to its target to consider it reached
 	--- Default: 7
 	bot_target_reach_distance: number,
 
+	--- Divisor for local player camera speed in equipment loop volume
+	--- Default: 1
+	cfg_equip_loop_camera_div: number,
+
+	--- Maximum volume for local player equipment loop
+	--- Default: 5
+	cfg_equip_loop_max_vol: number,
+
+	--- Divisor for local player move speed in equipment loop volume
+	--- Default: 100
+	cfg_equip_loop_move_div: number,
+
+	--- Divisor for remote player look activity in equipment loop volume
+	--- Default: 0.2
+	cfg_equip_loop_remote_look_div: number,
+
+	--- Maximum volume for remote player equipment loop
+	--- Default: 4
+	cfg_equip_loop_remote_max_vol: number,
+
+	--- Divisor for remote player move speed in equipment loop volume
+	--- Default: 100
+	cfg_equip_loop_remote_move_div: number,
+
+	--- Smoothing speed for remote player equipment loop volume
+	--- Default: 30
+	cfg_equip_loop_remote_smooth: number,
+
+	--- Smoothing speed for local player equipment loop volume
+	--- Default: 40
+	cfg_equip_loop_smooth: number,
+
+	--- Maximum buoyancy force for smoke puffs
+	--- Default: 1.4
+	cfg_smoke_buoyancy_max: number,
+
+	--- Minimum buoyancy force for smoke puffs
+	--- Default: 0
+	cfg_smoke_buoyancy_min: number,
+
+	--- How long a smoke grenade emits smoke in seconds
+	--- Default: 30
+	cfg_smoke_burn_duration: number,
+
+	--- Curl noise amplitude for smoke movement
+	--- Default: 0.7
+	cfg_smoke_curl_amplitude: number,
+
+	--- How fast curl noise pattern changes over time
+	--- Default: 0.01
+	cfg_smoke_curl_change_speed: number,
+
+	--- Spatial frequency of curl noise for smoke
+	--- Default: 0.14
+	cfg_smoke_curl_frequency: number,
+
+	--- Time in seconds before curl noise reaches full strength
+	--- Default: 0.5
+	cfg_smoke_curl_ramp_time: number,
+
+	--- Vertical curl noise variance per puff
+	--- Default: 1
+	cfg_smoke_curl_y_variance: number,
+
+	--- Set to 1 to enable smoke culling debug output
+	--- Default: 0
+	cfg_smoke_debug_cull: number,
+
+	--- Drag coefficient for smoke puffs
+	--- Default: 3
+	cfg_smoke_drag_coefficient: number,
+
+	--- Initial velocity of emitted smoke puffs
+	--- Default: 10
+	cfg_smoke_emit_force: number,
+
+	--- Smoke puffs emitted per second
+	--- Default: 11
+	cfg_smoke_emit_rate: number,
+
+	--- Random speed variance for emitted smoke puffs
+	--- Default: 0.2
+	cfg_smoke_emit_speed_variance: number,
+
+	--- Normalized age at which smoke puff reaches full opacity
+	--- Default: 0.01
+	cfg_smoke_fade_in_end: number,
+
+	--- Normalized age at which smoke puff starts fading out
+	--- Default: 0.8
+	cfg_smoke_fade_out_start: number,
+
+	--- Random lifetime variance for smoke puffs
+	--- Default: 0.3
+	cfg_smoke_lifetime_variance: number,
+
+	--- Maximum opacity of smoke puffs
+	--- Default: 0.55
+	cfg_smoke_max_opacity: number,
+
+	--- Base size
+	--- Default: 0.9
+	cfg_smoke_puff_base_size: number,
+
+	--- How much smoke puffs grow over their lifetime
+	--- Default: 15
+	cfg_smoke_puff_growth: number,
+
+	--- Lifetime of a smoke puff in seconds
+	--- Default: 16
+	cfg_smoke_puff_lifetime: number,
+
+	--- How much wind affects smoke movement
+	--- Default: 1
+	cfg_smoke_wind_factor: number,
+
+	--- Vertical scale of wind effect on smoke
+	--- Default: 0.1
+	cfg_smoke_wind_vertical_scale: number,
+
 	--- Whether chat announces server changes
 	--- Default: true
 	chat_announce_changes: boolean,
-
-	--- Whether chat is disabled
-	--- Default: false
-	chat_disable: boolean,
 
 	--- Maximum chat history
 	--- Default: 25
@@ -106,6 +226,14 @@ declare sharedvars: {
 	--- Default: true
 	dbg_enable_editor_recommended: boolean,
 
+	--- Whether RemoteEvent profiling is enabled
+	--- Default: false
+	dbg_event_profiling: boolean,
+
+	--- Whether the deploy screen forcibly shows the main match buttons
+	--- Default: false
+	dbg_force_main_branch_deploy_config: boolean,
+
 	--- hold to interact time for magchecking and firemode checking
 	--- Default: 0.2
 	dbg_game_hold_to_interact_time: number,
@@ -143,12 +271,16 @@ declare sharedvars: {
 	dbg_prepare_for_rig: boolean,
 
 	--- Whether microprofiler tags are enabled
-	--- Default: false
+	--- Default: true
 	dbg_profiling: boolean,
 
 	--- projectile gizmos
 	--- Default: false
 	dbg_projectile: boolean,
+
+	--- React debugging flag
+	--- Default: false
+	dbg_react: boolean,
 
 	--- enables customizing any weapon recoil patterns in the F10 menu
 	--- Default: false
@@ -207,8 +339,12 @@ declare sharedvars: {
 	game_branch: string,
 
 	--- (READ-ONLY) Game version
-	--- Default: 0.24.3
+	--- Default: 0.25.2
 	game_version: string,
+
+	--- Whether capture zone beam outlines are shown
+	--- Default: false
+	gm_capture_zone_outline: boolean,
 
 	--- Whether loadout editing is disabled
 	--- Default: false
@@ -350,6 +486,10 @@ declare sharedvars: {
 	--- Default: false
 	plr_disable_rpg_refill: boolean,
 
+	--- Whether the second utility slot is disabled
+	--- Default: false
+	plr_disable_second_utility: boolean,
+
 	--- How long it takes to drown
 	--- Default: 20
 	plr_drown_time: number,
@@ -361,6 +501,10 @@ declare sharedvars: {
 	--- Whether one hand aiming is enabled. When enabled, the default keybind is I
 	--- Default: true
 	plr_enable_gangsta_control: boolean,
+
+	--- Whether leaderboard markers are enabled
+	--- Default: true
+	plr_enable_leaderboard_points: boolean,
 
 	--- Whether markers are enabled
 	--- Default: true
@@ -389,6 +533,18 @@ declare sharedvars: {
 	--- Camera FOV while in freecam
 	--- Default: 70
 	plr_freecam_fov: number,
+
+	--- Grenade physics density
+	--- Default: 1.2
+	plr_grenade_density: number,
+
+	--- Grenade physics elasticity (bounciness)
+	--- Default: 0.2
+	plr_grenade_elasticity: number,
+
+	--- Grenade physics friction
+	--- Default: 0.3
+	plr_grenade_friction: number,
 
 	--- Player grenade throw strength
 	--- Default: 1
@@ -710,15 +866,19 @@ declare sharedvars: {
 	--- Default: true
 	plr_weapon_clamp_stats_values: boolean,
 
+	--- Whether chat is disabled
+	--- Default: true
+	ro_chat_disable: boolean,
+
 	--- Whether progression related buying features and limits are enabled
 	--- Default: false
 	ro_earnings_enabled: boolean,
 
 	--- Whether Staging branch players get money
-	--- Default: false
+	--- Default: true
 	ro_infinite_money_in_staging: boolean,
 
-	--- Server join message. Set with (set-join-message message)
+	--- Server join message. Set with chat.set_join_message(message)
 	--- Default: 
 	ro_join_message: string,
 
@@ -730,21 +890,37 @@ declare sharedvars: {
 	--- Default: false
 	ro_luau_give_money_enabled: boolean,
 
+	--- Whether the Luau mod console environment was loaded
+	--- Default: true
+	ro_server_console_loaded: boolean,
+
 	--- Reason why spawning is disabled. Set with (set-spawning-disabled-reason reason)
 	--- Default: 
 	ro_spawning_disabled_reason: string,
 
+	--- Whether bots spawn on their own
+	--- Default: true
+	sv_bot_auto_spawning_enabled: boolean,
+
 	--- Server creation time
-	--- Default: 1756221762.658987
+	--- Default: 1774688568.053904
 	sv_creation_time: number,
 
 	--- Server day cycle speed in seconds. A value of 1 is 1:1 to real life
 	--- Default: 0
 	sv_day_cycle_speed: number,
 
+	--- Whether tracers are force enabled
+	--- Default: false
+	sv_force_tracers: boolean,
+
 	--- Server gravity. Mapped to workspace.Gravity
 	--- Default: 60
 	sv_gravity: number,
+
+	--- Whether moderator tag in chat is disabled
+	--- Default: false
+	sv_hide_mod_tag: boolean,
 
 	--- When the match intermission ends, or nil if there is none
 	--- Default: nil
@@ -759,7 +935,7 @@ declare sharedvars: {
 	sv_load_only_preloaded_attachments: boolean,
 
 	--- Geographical server location
-	--- Default: Paris (France)
+	--- Default: Frankfurt am Main (Germany)
 	sv_location: string,
 
 	--- How long the intermission between matches lasts
@@ -821,4 +997,24 @@ declare sharedvars: {
 	--- (READ-ONLY) VIP server owner
 	--- Default: LegitACarWithAGun
 	vip_owner: string,
+
+	--- Radius of voxel destruction from bullet hits
+	--- Default: 0
+	voxel_bullet_destruction_radius: number,
+
+	--- Default grid size for voxel destruction
+	--- Default: 0.5
+	voxel_default_grid_size: number,
+
+	--- Default density of voronoi chunks for voxel destruction
+	--- Default: 0.01
+	voxel_default_voronoi_density: number,
+
+	--- Default radius of voxel destruction
+	--- Default: 10
+	voxel_destruction_radius: number,
+
+	--- Physics throw force for voxel parts
+	--- Default: 40
+	voxel_throw_force: number,
 }
