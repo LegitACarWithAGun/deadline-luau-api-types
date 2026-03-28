@@ -9,6 +9,7 @@ type sharedvar_info = {
 	default: any,
 }
 
+-- NOTICE: read-only is only specified on some of the sharedvars that are treated as read-only 
 local READ_ONLY_PATTERN = "READ%-ONLY"
 
 local sharedvar_list: {sharedvar_info} = {}
@@ -24,12 +25,15 @@ local insert_sharedvar = function(name: string, type_name: string, description: 
 	sharedvar_existance_map[name] = true
 end
 
-for name, description in pairs(sharedvars_descriptions) do
+-- expected pattern: (READ-ONLY type) description
+-- ie: (number) Player damage multiplier
+-- ie: (READ-ONLY string) Game branch
+for name, description in sharedvars_descriptions do
     -- description has format '(READ-ONLY? type) description'
 	-- this just gets everything inside the brackets
     local type_name = string.match(description, "^%(.-%)")
 	if type_name == nil then
-		error(`cant get the brackets from the start of [{description}]`)
+		error(`cant get the brackets (and thus type information) from the start of description for {name}: [{description}]`)
 	end
     
     -- remove the type info from the description
@@ -49,9 +53,9 @@ end
 
 -- add any sharedvars that werent in sharedvars_descriptions
 -- user will get warned of them later
--- TODO: for-pairs does not work on sharedvars
+-- TODO: currently does nothing, cant loop over sharedvars
 local vars_without_type_information: {string} = {}
-for name, _value in pairs(sharedvars) do
+for name, _value in sharedvars do
 	-- check if we already have the sharedvar
 	if sharedvar_existance_map[name] then
 		continue
@@ -72,7 +76,7 @@ local main_output = [[-- generated using ./src/import_sharedvars.luau
 
 declare sharedvars: {
 ]]
-for i, info in pairs(sharedvar_list) do
+for i, info in sharedvar_list do
 	if i ~= 1 then
 		main_output ..= "\n"
 	end
