@@ -1,6 +1,8 @@
 
 
 export type camera_controller = {
+	[any]: any,
+
 	new: (get_head_cframe: unknown) -> camera_controller,
 	update: (self: camera_controller, delta_time: number) -> unknown,
 
