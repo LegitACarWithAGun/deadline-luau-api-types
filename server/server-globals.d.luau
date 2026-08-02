@@ -89,6 +89,15 @@ export type weapon_data = gun_data | throwable_data
 
 export type team_id = "attacker" | "defender"
 
+export type leaderboard_stats = {
+	deaths: number,
+	experience: number,
+	weapon_use_time: {[string]: number},
+	points: number,
+	actions: unknown,
+	kills: number,
+}
+
 export type player = {
 	fire_client: (...any) -> nil,
 	kill: () -> nil,
@@ -172,14 +181,7 @@ export type player = {
 			owned_camo: unknown,
 		}},			
 	},
-	get_leaderboard_stats: () -> {
-		deaths: number,
-		experience: number,
-		weapon_use_time: {[string]: number},
-		points: number,
-		actions: unknown,
-		kills: number,	
-	},
+	get_leaderboard_stats: () -> leaderboard_stats,
 }
 
 declare players: {
