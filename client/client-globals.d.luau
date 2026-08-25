@@ -23,10 +23,7 @@ export type camera_controller = {
 declare register_camera_mode: (name: string, class: camera_controller) -> unknown
 
 
-declare iris: unknown
-
-
-declare ui: unknown
+declare iris: any
 
 
 declare fire_server: (...any) -> nil
