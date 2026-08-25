@@ -63,14 +63,14 @@ declare input: {
 
 -- todo
 type ClientInputGroup_methods = {
-	bind_user_setting: (self: ClientInputGroup, callback: (unknown) -> unknown, InputType, action: keybind_name) -> unknown,
+	bind_user_setting: (self: ClientInputGroup, callback: () -> (), InputType, action: keybind_name) -> (),
 	bind: unknown,
 	disconnect_all_binds: unknown,
 	constructor: unknown,
 	disconnect_bind_by_name: unknown,
 	new: () -> ClientInputGroup,
 }
-type ClientInputGroup = {
+export type ClientInputGroup = {
 	events: unknown,
 	key_events: unknown,
 } & ClientInputGroup_methods
@@ -86,7 +86,7 @@ type InputGroup_methods = {
 	disconnect_bind_by_name: unknown,
 	new: unknown,
 }
-type InputGroup = {
+export type InputGroup = {
 	events: unknown,
 } & InputGroup_methods
 declare InputGroup: InputGroup_methods
