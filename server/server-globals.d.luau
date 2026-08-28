@@ -1,6 +1,6 @@
 --- PLEASE dont use this
 declare set_require_domain: (url_prefix: string) -> nil
-declare require: (url: string) -> nil
+-- declare require: (url: string) -> nil
 
 export type map_config = {
 	map: string,
