@@ -47,7 +47,7 @@ export type Signal<args...> = {
 	wrap: unknown,
 	Connect: (self: Signal<args...>, callback: (args...) -> ()) -> RBXScriptConnection,
 	Destroy: unknown,
-	Fire: unknown,
+	Fire: (self: Signal<args...>, args...) -> (),
 	Wait: unknown,
 	--- not super confident in the signature for this
 	Once: (self: Signal<args...>, callback: (args...) -> ()) -> unknown,
