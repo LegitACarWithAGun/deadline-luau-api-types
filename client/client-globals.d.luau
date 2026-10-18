@@ -20,7 +20,7 @@ export type camera_controller = {
 	reduced_y_limit: boolean,
 	mouse_delta: Vector2,
 }
-declare register_camera_mode: (name: string, class: camera_controller) -> unknown
+declare register_camera_mode: (name: string, class: camera_controller?) -> unknown
 
 
 declare iris: any
