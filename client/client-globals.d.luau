@@ -1,12 +1,14 @@
 
-
-export type camera_controller = {
-	[any]: any,
-
-	new: (get_head_cframe: unknown) -> camera_controller,
-	update: (self: camera_controller, delta_time: number) -> unknown,
-
-	-- created by the game
+-- only .update needs to be returned by .new, the rest is only used after .update is called
+-- unsure what it does with rot_x and rot_y
+export type camera_controller_required = {
+	update: (self: any, delta_time: number) -> any,
+	camera_cframe: CFrame,
+	rot_x: number,
+	rot_y: number,
+}
+--- added to the camera controller object by the game before .update
+export type camera_controller_provided = {
 	offset: Vector3,
 	roll: number,
 	sensitivity: number,
@@ -16,11 +18,22 @@ export type camera_controller = {
 		movementY: number,
 		movementZ: number,
 		using_freecam: boolean,
+		--- seems to constantly drift up and forwards from the previous self.camera_cframe by (0, 0.28, -0.3)
+		camera_cframe: CFrame,
 	},
 	reduced_y_limit: boolean,
 	mouse_delta: Vector2,
 }
-declare register_camera_mode: (name: string, class: camera_controller?) -> unknown
+export type camera_controller_register = {
+	new: (get_head_cframe: () -> CFrame) -> camera_controller_required,
+}
+--- treat as depricated, please use the other camera_controller_** types instead
+-- . cant use @depricated on types, so this will prolly stay here forever >w>
+export type camera_controller = camera_controller_required & camera_controller_register & camera_controller_provided & {
+	[any]: any,
+}
+
+declare register_camera_mode: (name: string, class: camera_controller_register?) -> unknown
 
 
 declare iris: any
