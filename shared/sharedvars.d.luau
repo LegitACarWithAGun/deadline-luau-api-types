@@ -31,19 +31,83 @@ declare sharedvars: {
 	api_messaging_enabled: boolean,
 
 	--- Newest server version
-	--- Default: 0.25.2
+	--- Default: 0.25.3
 	api_newest_server_version: string,
 
 	--- Game update message shown to returning players
-	--- Default: Welcome to 0.25.2! We added several new grenades, improved performance and made QOL changes. Have fun!
+	--- Default: Welcome to 0.25.3! We added bipods, fire grenades, gun tape and stickers, and more. Have fun!
 	api_update_message: string,
+
+	--- Pause in seconds a bot waits between bursts (also the gap between single shots when firing semi at range)
+	--- Default: 0.6
+	bot_burst_cooldown_seconds: number,
+
+	--- Target distance under which a bot fires bursts; beyond it the bot fires single shots
+	--- Default: 30
+	bot_burst_distance: number,
+
+	--- Rounds a bot fires per burst when the target is within burst distance
+	--- Default: 4
+	bot_burst_rounds: number,
+
+	--- Seconds a bot remembers a contact before its confidence decays to zero and it is forgotten
+	--- Default: 8
+	bot_contact_memory_seconds: number,
+
+	--- Radius around a bot's hold position searched for a cover point that breaks the threat's line of sight
+	--- Default: 8
+	bot_cover_search_radius: number,
+
+	--- Seconds a bot stays behind cover before peeking out to fire again
+	--- Default: 1.5
+	bot_cover_seconds: number,
+
+	--- Radius around the objective center where defending bots spread out to hold positions
+	--- Default: 18
+	bot_defend_radius: number,
+
+	--- Distance at which a bot stops pursuing and starts firing at its target
+	--- Default: 60
+	bot_engage_distance: number,
+
+	--- Chance a landed bot shot is a headshot rather than a body shot
+	--- Default: 0.001
+	bot_headshot_chance: number,
+
+	--- Chance a bot shot that the server cast registers actually deals damage
+	--- Default: 0.01
+	bot_hit_chance: number,
+
+	--- Seconds a bot peeks out and fires before ducking back into cover
+	--- Default: 2.5
+	bot_peek_seconds: number,
+
+	--- Fixed time in seconds a bot takes to complete a headless reload
+	--- Default: 2.5
+	bot_reload_time_seconds: number,
 
 	--- How close a bot has to be to its target to consider it reached
 	--- Default: 7
 	bot_target_reach_distance: number,
 
+	--- Radians per second a calm bot (no known enemies) turns its aim toward a new look target
+	--- Default: 3
+	bot_turn_rate_calm: number,
+
+	--- Maximum radians per second a bot can turn its aim regardless of agitation
+	--- Default: 14
+	bot_turn_rate_max: number,
+
+	--- Extra radians per second of aim turn speed added per known enemy (agitation)
+	--- Default: 4
+	bot_turn_rate_per_enemy: number,
+
+	--- Seconds before a defending bot picks a new wander point within the objective area
+	--- Default: 5
+	bot_wander_seconds: number,
+
 	--- Divisor for local player camera speed in equipment loop volume
-	--- Default: 1
+	--- Default: 3
 	cfg_equip_loop_camera_div: number,
 
 	--- Maximum volume for local player equipment loop
@@ -55,7 +119,7 @@ declare sharedvars: {
 	cfg_equip_loop_move_div: number,
 
 	--- Divisor for remote player look activity in equipment loop volume
-	--- Default: 0.2
+	--- Default: 2
 	cfg_equip_loop_remote_look_div: number,
 
 	--- Maximum volume for remote player equipment loop
@@ -67,11 +131,11 @@ declare sharedvars: {
 	cfg_equip_loop_remote_move_div: number,
 
 	--- Smoothing speed for remote player equipment loop volume
-	--- Default: 30
+	--- Default: 40
 	cfg_equip_loop_remote_smooth: number,
 
 	--- Smoothing speed for local player equipment loop volume
-	--- Default: 40
+	--- Default: 30
 	cfg_equip_loop_smooth: number,
 
 	--- Maximum buoyancy force for smoke puffs
@@ -186,6 +250,14 @@ declare sharedvars: {
 	--- Default: false
 	dbg_backblast: boolean,
 
+	--- whether per-bot AI debug windows are streamed to clients
+	--- Default: false
+	dbg_bot_ai_snapshot: boolean,
+
+	--- how many times per second bot AI debug snapshots are sent
+	--- Default: 10
+	dbg_bot_ai_snapshot_frequency_hz: number,
+
 	--- whether bot pathfinding lines are enabled
 	--- Default: false
 	dbg_bot_pathfind_lines: boolean,
@@ -222,6 +294,10 @@ declare sharedvars: {
 	--- Default: false
 	dbg_editor_disable_stat_previews: boolean,
 
+	--- Disables editor tutorial
+	--- Default: false
+	dbg_editor_disable_tutorial: boolean,
+
 	--- enables the recommended attachment system in the editor
 	--- Default: true
 	dbg_enable_editor_recommended: boolean,
@@ -238,6 +314,10 @@ declare sharedvars: {
 	--- Default: 0.2
 	dbg_game_hold_to_interact_time: number,
 
+	--- grenade trajectory gizmos
+	--- Default: false
+	dbg_grenade: boolean,
+
 	--- whether fps is limited to dbg_max_fps
 	--- Default: false
 	dbg_limit_fps: boolean,
@@ -250,9 +330,21 @@ declare sharedvars: {
 	--- Default: false
 	dbg_mag_stack: boolean,
 
+	--- delay after match finish death before the match results view mounts
+	--- Default: 1
+	dbg_match_finish_delay: number,
+
 	--- max fps limit while dbg_limit_fps is enabled
 	--- Default: 15
 	dbg_max_fps: number,
+
+	--- molotov debug
+	--- Default: false
+	dbg_molotov: boolean,
+
+	--- whether mounting raycast debug is enabled
+	--- Default: false
+	dbg_mount_lines: boolean,
 
 	--- debugger for aimmarker positioning error
 	--- Default: false
@@ -302,6 +394,10 @@ declare sharedvars: {
 	--- Default: false
 	dbg_store_changes: boolean,
 
+	--- shows tape sampling raycasts
+	--- Default: false
+	dbg_tape_raycast: boolean,
+
 	--- whether the gunshot emitter test mode is enabled. Only works while joining
 	--- Default: false
 	dbg_test_gunshot_emitter: boolean,
@@ -334,12 +430,20 @@ declare sharedvars: {
 	--- Default: false
 	ff_field_voicelines: boolean,
 
+	--- Enables new rigs
+	--- Default: false
+	ff_new_rigs: boolean,
+
+	--- Whether weapon tape customization is enabled
+	--- Default: true
+	ff_tape_customization: boolean,
+
 	--- (READ-ONLY) Game branch
 	--- Default: release
 	game_branch: string,
 
 	--- (READ-ONLY) Game version
-	--- Default: 0.25.2
+	--- Default: 0.25.3
 	game_version: string,
 
 	--- Whether capture zone beam outlines are shown
@@ -402,7 +506,11 @@ declare sharedvars: {
 	--- Default: 15
 	gm_time_to_capture: number,
 
-	--- (READ-ONLY) Whether the server is a VIP server
+	--- (READ-ONLY) Whether the server is a player-owned private server
+	--- Default: true
+	is_player_owned_private_server: boolean,
+
+	--- (READ-ONLY) Whether the server is a VIP or reserved server
 	--- Default: true
 	is_vip_server: boolean,
 
@@ -445,6 +553,18 @@ declare sharedvars: {
 	--- Player base weight
 	--- Default: 0.7
 	plr_base_weight: number,
+
+	--- Time for bipod joints to fold or unfold
+	--- Default: 0.25
+	plr_bipod_deploy_time: number,
+
+	--- Time for the hand to reach the bipod when toggling it
+	--- Default: 0.25
+	plr_bipod_hand_ramp_time: number,
+
+	--- Time for the hand to leave the bipod after toggling it
+	--- Default: 0.4
+	plr_bipod_hand_release_time: number,
 
 	--- Player buck barrel deviation
 	--- Default: 1
@@ -511,7 +631,7 @@ declare sharedvars: {
 	plr_enable_markers: boolean,
 
 	--- Whether mounting is enabled
-	--- Default: false
+	--- Default: true
 	plr_enable_mounting: boolean,
 
 	--- Player ergonomics multiplier
@@ -534,10 +654,6 @@ declare sharedvars: {
 	--- Default: 70
 	plr_freecam_fov: number,
 
-	--- Grenade physics density
-	--- Default: 1.2
-	plr_grenade_density: number,
-
 	--- Grenade physics elasticity (bounciness)
 	--- Default: 0.2
 	plr_grenade_elasticity: number,
@@ -546,9 +662,29 @@ declare sharedvars: {
 	--- Default: 0.3
 	plr_grenade_friction: number,
 
+	--- Minimum grenade speed to shatter glass
+	--- Default: 35
+	plr_grenade_glass_break_speed: number,
+
+	--- Grenade away-from-surface speed below which it rolls instead of bouncing
+	--- Default: 2
+	plr_grenade_roll_away_speed: number,
+
+	--- Grenade rolling resistance (per-frame velocity damping while rolling)
+	--- Default: 0.005
+	plr_grenade_rolling_resistance: number,
+
+	--- Grenade speed below which it settles and stops
+	--- Default: 4
+	plr_grenade_settle_speed: number,
+
 	--- Player grenade throw strength
 	--- Default: 1
 	plr_grenade_throw_strength: number,
+
+	--- Y height below which grenades are destroyed
+	--- Default: -5000
+	plr_grenade_void_y: number,
 
 	--- Player headshot damage multiplier
 	--- Default: 1
@@ -677,6 +813,10 @@ declare sharedvars: {
 	--- Player replication rollback time in milliseconds
 	--- Default: 190
 	plr_replication_rollback_time_ms: number,
+
+	--- whether the roblox reset button kills the player
+	--- Default: true
+	plr_reset_button: boolean,
 
 	--- Delay before the player dies after resetting
 	--- Default: 0
@@ -894,6 +1034,10 @@ declare sharedvars: {
 	--- Default: true
 	ro_server_console_loaded: boolean,
 
+	--- Whether gun customizations are replicated
+	--- Default: false
+	ro_share_gun_customization: boolean,
+
 	--- Reason why spawning is disabled. Set with (set-spawning-disabled-reason reason)
 	--- Default: 
 	ro_spawning_disabled_reason: string,
@@ -903,7 +1047,7 @@ declare sharedvars: {
 	sv_bot_auto_spawning_enabled: boolean,
 
 	--- Server creation time
-	--- Default: 1774688568.053904
+	--- Default: 1794808264.743742
 	sv_creation_time: number,
 
 	--- Server day cycle speed in seconds. A value of 1 is 1:1 to real life
@@ -935,7 +1079,7 @@ declare sharedvars: {
 	sv_load_only_preloaded_attachments: boolean,
 
 	--- Geographical server location
-	--- Default: Frankfurt am Main (Germany)
+	--- Default: Amsterdam (The Netherlands)
 	sv_location: string,
 
 	--- How long the intermission between matches lasts
@@ -953,6 +1097,10 @@ declare sharedvars: {
 	--- Whether modfiles are enabled
 	--- Default: true
 	sv_modfiles_enabled: boolean,
+
+	--- Molotov fire zone burn duration in seconds
+	--- Default: 25
+	sv_molotov_burn_duration: number,
 
 	--- Whether tracers have random colors
 	--- Default: false
