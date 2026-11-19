@@ -3,50 +3,50 @@
 
 export type keybind_name =
 | string
-| "toggle_radio" -- Use Radio
-| "flash_toggle" -- Toggle Flashlight
-| "interaction" -- Interact
-| "point_aim" -- Point Aim
-| "space" -- Jump
-| "inspect" -- Inspect
-| "leaderboard" -- Toggle Leaderboard
-| "editor_move_gun" -- Move weapon in editor
-| "lean_left" -- Lean Left
-| "chat_toggle" -- Toggle chat
 | "aim" -- Aim, Underhand throw grenade
-| "equip_primary" -- Switch to primary
+| "alt_key" -- [READONLY] Alt key
 | "chat_focus" -- Type in chat
-| "zeroing_modifier" -- Zeroing Modifier
+| "chat_focus_team" -- Type in teamchat
+| "chat_toggle" -- Toggle chat
+| "crouch" -- Crouch
+| "death_view_leave" -- Death view: Leave
+| "death_view_respawn" -- Death view: Respawn
+| "editor_aim" -- Aim in editor
+| "editor_move_gun" -- Move weapon in editor
+| "equip_melee" -- Switch to knife
+| "equip_primary" -- Switch to primary
+| "equip_secondary" -- Switch to secondary
+| "equip_throwable1" -- Switch to utility 1
+| "equip_throwable2" -- Switch to utility 2
+| "fire" -- Fire, Throw grenade
+| "firemode" -- Switch Firemode
+| "flash_toggle" -- Toggle Flashlight
+| "gangsta_control" -- Gangsta control [has to be enabled by an admin]
+| "hide_editor_ui" -- Toggle Editor UI
+| "hide_tutorial" -- Hide ingame tutorial
+| "inspect" -- Inspect
+| "interaction" -- Interact
+| "laser_toggle" -- Toggle Laser
+| "leaderboard" -- Toggle Leaderboard
+| "lean_left" -- Lean Left
+| "lean_right" -- Lean Right
+| "mount_toggle" -- Toggle Mounting
 | "move_backward" -- Move backward
 | "move_down" -- Move down in the editor
-| "equip_melee" -- Switch to knife
-| "firemode" -- Switch Firemode
-| "night_vision" -- Toggle NV
-| "run" -- Run
-| "editor_aim" -- Aim in editor
-| "prone" -- Prone
-| "lean_right" -- Lean Right
-| "switch_scope" -- Switch Scope
-| "switch_reticle" -- Switch Reticle
-| "gangsta_control" -- Gangsta control [has to be enabled by an admin]
-| "shove" -- Shove Weapon
-| "toggle_insitux" -- Toggle Insitux
-| "reload" -- Reload, Magcheck
-| "prompt_confirm" -- Prompt: Select highlighted option
-| "equip_throwable2" -- Switch to utility 2
-| "move_up" -- Move up in the editor
-| "fire" -- Fire, Throw grenade
-| "alt_key" -- [READONLY] Alt key
-| "move_left" -- Move left
 | "move_forward" -- Move forward
-| "mount_toggle" -- Toggle Mounting
-| "death_view_respawn" -- Death view: Respawn
-| "hide_tutorial" -- Hide ingame tutorial
-| "death_view_leave" -- Death view: Leave
-| "laser_toggle" -- Toggle Laser
-| "equip_secondary" -- Switch to secondary
+| "move_left" -- Move left
 | "move_right" -- Move right
-| "hide_editor_ui" -- Toggle Editor UI
-| "equip_throwable1" -- Switch to utility 1
-| "crouch" -- Crouch
-| "chat_focus_team" -- Type in teamchat
+| "move_up" -- Move up in the editor
+| "night_vision" -- Toggle NV
+| "point_aim" -- Point Aim
+| "prompt_confirm" -- Prompt: Select highlighted option
+| "prone" -- Prone
+| "reload" -- Reload, Magcheck
+| "run" -- Run
+| "shove" -- Shove Weapon
+| "space" -- Jump
+| "switch_reticle" -- Switch Reticle
+| "switch_scope" -- Switch Scope
+| "toggle_insitux" -- Toggle Insitux
+| "toggle_radio" -- Use Radio
+| "zeroing_modifier" -- Zeroing Modifier

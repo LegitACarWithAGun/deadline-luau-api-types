@@ -8,8 +8,15 @@ export type keybind_name =
 | string
 ]]
 
+local internal_names = {}
+for id in config.keybinds do
+	table.insert(internal_names, id)
+end
+table.sort(internal_names)
+
 local last_id = ""
-for id, info in pairs(config.keybinds) do
+for _, id in internal_names do
+	local info = config.keybinds[id]
 	output ..= `| "{id}" -- {info.name}\n`
 	last_id = id
 end
