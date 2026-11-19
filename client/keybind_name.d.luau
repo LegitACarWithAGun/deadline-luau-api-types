@@ -16,8 +16,10 @@ export type keybind_name =
 | "aim" -- Aim, Underhand throw grenade
 | "equip_primary" -- Switch to primary
 | "chat_focus" -- Type in chat
+| "zeroing_modifier" -- Zeroing Modifier
 | "move_backward" -- Move backward
 | "move_down" -- Move down in the editor
+| "equip_melee" -- Switch to knife
 | "firemode" -- Switch Firemode
 | "night_vision" -- Toggle NV
 | "run" -- Run
@@ -37,6 +39,7 @@ export type keybind_name =
 | "alt_key" -- [READONLY] Alt key
 | "move_left" -- Move left
 | "move_forward" -- Move forward
+| "mount_toggle" -- Toggle Mounting
 | "death_view_respawn" -- Death view: Respawn
 | "hide_tutorial" -- Hide ingame tutorial
 | "death_view_leave" -- Death view: Leave
