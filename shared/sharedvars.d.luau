@@ -31,11 +31,15 @@ declare sharedvars: {
 	api_messaging_enabled: boolean,
 
 	--- Newest server version
-	--- Default: 0.25.3
+	--- Default: 0.25.4
 	api_newest_server_version: string,
 
+	--- Image shown above the game update message, as rbxassetid://123
+	--- Default: rbxassetid://130924856361444
+	api_update_image: string,
+
 	--- Game update message shown to returning players
-	--- Default: Welcome to 0.25.3! We added bipods, fire grenades, gun tape and stickers, and more. Have fun!
+	--- Default: Welcome to 0.25.4! We added Gun Game, the P226 and the revamped SCALAR, and more. Enjoy!
 	api_update_message: string,
 
 	--- Pause in seconds a bot waits between bursts (also the gap between single shots when firing semi at range)
@@ -246,6 +250,10 @@ declare sharedvars: {
 	--- Default: false
 	crit_shutdown: boolean,
 
+	--- whether the animation event editor window is open
+	--- Default: false
+	dbg_animation_events: boolean,
+
 	--- Whether backblast debug is active
 	--- Default: false
 	dbg_backblast: boolean,
@@ -281,6 +289,10 @@ declare sharedvars: {
 	--- whether to show node offset debug ui in builder
 	--- Default: false
 	dbg_debug_node_offsets: boolean,
+
+	--- hides the ingame keybind guide (used by recorded test scenarios)
+	--- Default: false
+	dbg_disable_keybind_guide: boolean,
 
 	--- whether lighting will update according to lighting preset and time
 	--- Default: false
@@ -326,9 +338,9 @@ declare sharedvars: {
 	--- Default: false
 	dbg_logservice: boolean,
 
-	--- enables customizing the ammo positions in the editor
+	--- whether the magazine round layout (mag stack) editor window is open
 	--- Default: false
-	dbg_mag_stack: boolean,
+	dbg_mag_stack_editor: boolean,
 
 	--- delay after match finish death before the match results view mounts
 	--- Default: 1
@@ -345,6 +357,10 @@ declare sharedvars: {
 	--- whether mounting raycast debug is enabled
 	--- Default: false
 	dbg_mount_lines: boolean,
+
+	--- balls
+	--- Default: false
+	dbg_optic_cut_cylinder: boolean,
 
 	--- debugger for aimmarker positioning error
 	--- Default: false
@@ -443,7 +459,7 @@ declare sharedvars: {
 	game_branch: string,
 
 	--- (READ-ONLY) Game version
-	--- Default: 0.25.3
+	--- Default: 0.25.4
 	game_version: string,
 
 	--- Whether capture zone beam outlines are shown
@@ -453,6 +469,18 @@ declare sharedvars: {
 	--- Whether loadout editing is disabled
 	--- Default: false
 	gm_disable_loadout_editing: boolean,
+
+	--- Kills needed to finish the Gun Game ladder (20 in 20v20, 15 in 7v7), the last one with the golden KOSCH
+	--- Default: 20
+	gm_gun_game_kills: number,
+
+	--- Where the Gun Game ladder comes from: official (only our gun pool), loadouts (our gun pool for at least half, the rest from player loadouts at match start) or stock (stock weapons in a random order)
+	--- Default: loadouts
+	gm_gun_game_ladder: string,
+
+	--- Gun Game melee kills knock the victim down a weapon
+	--- Default: true
+	gm_gun_game_melee_demotes: boolean,
 
 	--- How long a TDM match lasts in minutes
 	--- Default: 20
@@ -494,7 +522,15 @@ declare sharedvars: {
 	--- Default: 80
 	gm_replication_packet_size_bytes_outgoing: number,
 
-	--- The amount of players a team can be unbalanced by before team switching isn't allowed
+	--- How many tickets the attacking team starts with in TDM
+	--- Default: 150
+	gm_tdm_attacker_tickets: number,
+
+	--- How many tickets the defending team starts with in TDM
+	--- Default: 150
+	gm_tdm_defender_tickets: number,
+
+	--- The maximum amount of players a team can be unbalanced by after a team switch (scales up on servers above 30 players)
 	--- Default: 2
 	gm_team_balancing_threshold: number,
 
@@ -597,6 +633,10 @@ declare sharedvars: {
 	--- Whether explosive projectile arming is disabled, meaning they will explode upon contact immediately
 	--- Default: false
 	plr_disable_arming: boolean,
+
+	--- Whether launchers (RPGs) are disallowed in loadouts
+	--- Default: false
+	plr_disable_launchers: boolean,
 
 	--- Whether NVG is disabled
 	--- Default: false
@@ -798,6 +838,10 @@ declare sharedvars: {
 	--- Default: true
 	plr_pvp: boolean,
 
+	--- Multiplier on the impulse bullets apply to ragdolls
+	--- Default: 0.75
+	plr_ragdoll_shot_strength: number,
+
 	--- Player ragdoll throw strength
 	--- Default: 12
 	plr_ragdoll_strength: number,
@@ -982,6 +1026,10 @@ declare sharedvars: {
 	--- Default: 1.1
 	plr_vault_rotation_limit: number,
 
+	--- Player vault speed multiplier, applied to the delay, move time and animation
+	--- Default: 1.3
+	plr_vault_speed: number,
+
 	--- Player stamina drain while vaulting
 	--- Default: 7
 	plr_vault_stamina_drain: number,
@@ -1007,14 +1055,18 @@ declare sharedvars: {
 	plr_weapon_clamp_stats_values: boolean,
 
 	--- Whether chat is disabled
-	--- Default: true
+	--- Default: false
 	ro_chat_disable: boolean,
 
 	--- Whether progression related buying features and limits are enabled
 	--- Default: false
 	ro_earnings_enabled: boolean,
 
-	--- Whether Staging branch players get money
+	--- Whether the current gamemode hands out its own weapons instead of loadouts
+	--- Default: false
+	ro_gamemode_ignores_player_setups: boolean,
+
+	--- Whether players with testing access (Staging testers, everyone on Ranch) get money
 	--- Default: true
 	ro_infinite_money_in_staging: boolean,
 
@@ -1022,7 +1074,7 @@ declare sharedvars: {
 	--- Default: 
 	ro_join_message: string,
 
-	--- Whether players without chat roles are kicked from the game
+	--- Whether Staging kicks players below Tester rank in the RECOIL group
 	--- Default: false
 	ro_kick_non_roled_players: boolean,
 
@@ -1042,12 +1094,24 @@ declare sharedvars: {
 	--- Default: 
 	ro_spawning_disabled_reason: string,
 
+	--- Whether inactive players are killed or sent back to the shooting range
+	--- Default: true
+	sv_afk_detection: boolean,
+
+	--- How long a spawned player can go without input before being killed
+	--- Default: 60
+	sv_afk_ingame_timeout_sec: number,
+
+	--- How long a player can stay in the menu without deploying before being sent to the shooting range
+	--- Default: 180
+	sv_afk_menu_timeout_sec: number,
+
 	--- Whether bots spawn on their own
 	--- Default: true
 	sv_bot_auto_spawning_enabled: boolean,
 
 	--- Server creation time
-	--- Default: 1794808264.743742
+	--- Default: 1795117382.331852
 	sv_creation_time: number,
 
 	--- Server day cycle speed in seconds. A value of 1 is 1:1 to real life
@@ -1079,7 +1143,7 @@ declare sharedvars: {
 	sv_load_only_preloaded_attachments: boolean,
 
 	--- Geographical server location
-	--- Default: Amsterdam (The Netherlands)
+	--- Default: London (United Kingdom)
 	sv_location: string,
 
 	--- How long the intermission between matches lasts
